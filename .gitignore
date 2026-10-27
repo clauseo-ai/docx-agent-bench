@@ -1,0 +1,7 @@
+/results/
+/suite/evals/fixtures/
+/suite/evals/long-fixtures/
+/suite/evals/arm/
+/suite/evals/arm-name
+/suite/evals/stetdoc-bin
+.DS_Store

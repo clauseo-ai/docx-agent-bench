@@ -1,0 +1,5 @@
+{
+  "name": "eval-harness",
+  "version": "0.0.0",
+  "description": "Benchmark only: writes a report for the graders when the agent stops."
+}
