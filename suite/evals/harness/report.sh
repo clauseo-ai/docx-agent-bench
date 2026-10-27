@@ -60,7 +60,14 @@ class_a() { "$S" check "$1" --all 2>&1 | grep -E '^  [a-z_]+ \(' | grep -vcE '^ 
 findings() { "$S" check "$1" --all 2>&1 | sed -n 's/^  \([a-z_]*\) (\([^) ]*\).*/\1 \2/p' | sort | uniq -c | sed 's/^ */finding: /'; }
 # body: the block lines of a view, without their refs.
 # Comment anchors ({c58}...{/c58}) are not text, so they are dropped.
-body() { grep -E '^[ptr][0-9]+ ' | sed -E 's/^[ptr][0-9]+ //; s/\{\/?c[0-9]+\}//g; s/\{joins-next\} ?//g'; }
+# A block the view wraps continues on the next lines after a trailing backslash; those are joined, so a
+# wrap that falls elsewhere (the lines of the two modes differ in length) is not a difference.
+body() {
+  awk '
+    /^[ptr][0-9]+ / { if (cur != "") print cur; cur = $0; next }
+    cur != "" && cur ~ /\\$/ { sub(/ *\\$/, "", cur); cur = cur " " $0; next }
+  END { if (cur != "") print cur }' | sed -E 's/^[ptr][0-9]+ //; s/\{\/?c[0-9]+\}//g; s/\{joins-next\} ?//g; s/ +/ /g'
+}
 m=$(metrics)
 [ -n "${EVAL_STETDOC_METRICS:-}" ] && echo "$m" >> "$EVAL_STETDOC_METRICS"
 

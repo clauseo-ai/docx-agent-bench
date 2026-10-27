@@ -27,31 +27,36 @@ for (const [sub, only, drop] of [['short', null, 'stale-colleague-edit'], ['stal
           const s = b.name === 'Bash' ? b.input.command : (b.input && (b.input.file_path || b.input.path)) || '';
           if (!/\.docx\b/.test(s)) return false;
           if (b.name !== 'Bash') return true;
-          return s.split(/&&|\|\||;|\|/).some((part) => /\.docx\b/.test(part) && !/^\s*(stetdoc|ls|cp|mv|test|\[|echo|cd)\b/.test(part.trim()));
+          if (/<<\s*'?(EOF|PY|PYEOF|END)/.test(s) && !/(zipfile|docx\.Document|unzip|lxml|document\.xml)/.test(s)) return false;
+          return s.split(/&&|\|\||;|\|/).some((part) => /\.docx\b/.test(part) && !/^\s*(stetdoc|ls|cp|mv|test|\[|echo|cd|md5|shasum|sha256sum|stat|file|wc|du)\b/.test(part.trim()));
         }).map((b) => `${b.name}: \`${String(b.name === 'Bash' ? b.input.command : b.input.file_path).slice(0, 160).replace(/\n/g, ' ⏎ ')}\``);
         const manual = calls.some((b) => b.name === 'Bash' && /--manual/.test(b.input.command));
         const gs = r.graders || [];
         const acc = gs.filter((g) => !notAcc(g.name));
         const reply = (gs.find((g) => g.evidence) || {}).evidence || '';
+        const repText = fs.existsSync(base + '.txt') ? fs.readFileSync(base + '.txt', 'utf8') : '';
+        const ooxml = [...repText.matchAll(/^ooxml-valid: (\w+)$/gm)].map((x) => x[1]).join('/') || '-';
+        const ooxmlNew = [...repText.matchAll(/^ooxml-new: (.*)$/gm)].map((x) => x[1]);
         rows.push({ case: c.name, run: i + 1, id, pass: acc.length && acc.every((g) => g.passed) && !r.error,
           failed: acc.filter((g) => !g.passed).map((g) => g.name), failedProc: gs.filter((g) => notAcc(g.name) && !g.passed).map((g) => g.name),
-          turns: r.turns, calls: calls.length, errors, nonStet, manual, cost: r.costUsd, wall: r.durationSeconds, error: r.error, reply, report: base + '.txt', transcript: tr.length ? base + '.transcript.jsonl' : '(missing)' });
+          turns: r.turns, ooxml, ooxmlNew, calls: calls.length, errors, nonStet, manual, cost: r.costUsd, wall: r.durationSeconds, error: r.error, reply, report: base + '.txt', transcript: tr.length ? base + '.transcript.jsonl' : '(missing)' });
       });
     }
   }
 }
 const P = console.log;
-P('| case | run | accuracy | turns | tool calls | tool errors | non-stetdoc .docx access | --manual | cost $ (CC) | wall s |');
-P('|---|---|---|---|---|---|---|---|---|---|');
-for (const r of rows) P(`| ${r.case} | ${r.run} | ${r.pass ? 'pass' : 'FAIL: ' + r.failed.join(', ')} | ${r.turns} | ${r.calls} | ${r.errors.length} | ${r.nonStet.length} | ${r.case === 'long-indenture-markup' ? (r.manual ? 'yes' : 'no') : (r.manual ? 'yes (!)' : '-')} | ${(r.cost || 0).toFixed(3)} | ${r.wall} |`);
+P('| case | run | accuracy | ooxml | turns | tool calls | tool errors | non-stetdoc .docx access | --manual | cost $ (CC) | wall s |');
+P('|---|---|---|---|---|---|---|---|---|---|---|');
+for (const r of rows) P(`| ${r.case} | ${r.run} | ${r.pass ? 'pass' : 'FAIL: ' + r.failed.join(', ')} | ${r.ooxml} | ${r.turns} | ${r.calls} | ${r.errors.length} | ${r.nonStet.length} | ${r.case === 'long-indenture-markup' ? (r.manual ? 'yes' : 'no') : (r.manual ? 'yes (!)' : '-')} | ${(r.cost || 0).toFixed(3)} | ${r.wall} |`);
 P('\n## Details\n');
 for (const r of rows) {
-  if (r.pass && !r.errors.length && !r.nonStet.length && !r.failedProc.length) continue;
+  if (r.pass && !r.errors.length && !r.nonStet.length && !r.failedProc.length && !r.ooxmlNew.length) continue;
   P(`### ${r.case} run ${r.run} (${r.id})\n`);
   if (!r.pass) P(`- failed accuracy: ${r.failed.join(', ')}${r.error ? ' [run error: ' + r.error + ']' : ''}`);
   if (r.failedProc.length) P(`- failed process notes: ${r.failedProc.join(', ')}`);
   for (const e of r.errors) P(`- tool error: ${e}`);
   for (const e of r.nonStet) P(`- non-stetdoc .docx access: ${e}`);
+  for (const e of r.ooxmlNew) P(`- ooxml new error group: ${e}`);
   if (r.reply) P(`- judged reply: ${r.reply.slice(0, 500).replace(/\n/g, ' ')}`);
   P(`- report: ${r.report}\n- transcript: ${r.transcript}\n`);
 }
