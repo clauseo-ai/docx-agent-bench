@@ -28,6 +28,37 @@ primary validity criterion reports "unavailable" and fails. The stetdoc command 
 the grading hook reads every arm's output with it. If Claude Code uses Vertex AI, `bench.sh` points
 `GOOGLE_APPLICATION_CREDENTIALS` at your application default credentials, because each run has a temporary home.
 
+### Antigravity (Gemini)
+
+`scripts/agy-bench.mjs` runs the same cases headless with Antigravity CLI (`agy`, 1.4.8 or later) instead of Claude
+Code, with the same fixtures, scaffolds, harness report and graders:
+
+```
+node scripts/agy-bench.mjs stetdoc short results/try/gemini-3.8-flash-medium/stetdoc/short --runs 2 -j 3
+node scripts/agy-bench.mjs none short results/try/gemini-3.8-flash-medium/none/short --case rename-seller-vendor
+```
+
+- Auth with a Gemini API key against a local endpoint: `~/.gemini/antigravity-cli/settings.json` holds
+  `{"modelProvider":"gemini"}`, and the runner passes `GEMINI_API_KEY` (default `dummy`) and `GOOGLE_GEMINI_BASE_URL`
+  (default `http://127.0.0.1:6969`). `AGY_MODEL` picks the model (default `gemini-3.8-flash-medium`), `AGY` the binary.
+- Each run gets its own root with `HOME=<root>/home` (the settings file is copied in) and the workspace
+  `<root>/home/cwd`, the layout `claude plugin eval` uses, so the scaffolds and `report.sh` run unchanged. The agent
+  gets the same PATH as in `bench.sh` and no benchmark variables.
+- Arms: `stetdoc` runs `stetdoc init --project --agent antigravity` in the workspace (`.agents/skills/stetdoc/SKILL.md`
+  and `AGENTS.md`; there is no docx guard hook as in the Claude Code plugin); `none` installs nothing;
+  `anthropic-docx` copies the skill into `.agents/skills/docx` (untested). `anthropic-legal` and `adeu` (an MCP server,
+  `agy mcp add` into the run's home) are not wired yet: see `installArm`.
+- Parts: `short`, `long`, `without-stetdoc`. The stale case needs a seeded conversation, which agy's print mode cannot
+  take, so it is not run.
+- After agy exits, the runner calls the harness's `report.sh` (the Claude Code Stop hook) directly, with a Claude-style
+  transcript converted from agy's stream-json (`run_command` becomes Bash, `view_file` Read, and so on; a command
+  exiting non-zero is a tool error, as in Claude Code). It then evaluates the case's graders itself: regex,
+  `tool_used`, and `llm` with `claude -p --model claude-sonnet-5-5` (`JUDGE=0` skips them). Turns are agy's model
+  responses; tokens come from its per-step usage.
+- Output is laid out as `bench.sh`'s (`eval/aggregate-result.json`, `metrics.jsonl`, `reports/` with the report, the
+  converted transcript, the raw `.agy.jsonl` stream and agy's log), so `verify.mjs` and `analyze.mjs` read it. Cost is
+  not computed (0). `KEEP=1` keeps the run roots.
+
 ## Cases
 
 `suite/evals/cases/`, the short tasks, on a master supply agreement, a credit agreement and two ISDA confirmations:

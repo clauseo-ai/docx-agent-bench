@@ -28,7 +28,8 @@ for (const [sub, only, drop] of [['short', null, 'stale-colleague-edit'], ['stal
           if (!/\.docx\b/.test(s)) return false;
           if (b.name !== 'Bash') return true;
           if (/<<\s*'?(EOF|PY|PYEOF|END)/.test(s) && !/(zipfile|docx\.Document|unzip|lxml|document\.xml)/.test(s)) return false;
-          return s.split(/&&|\|\||;|\|/).some((part) => /\.docx\b/.test(part) && !/^\s*(stetdoc|ls|cp|mv|test|\[|echo|cd|md5|shasum|sha256sum|stat|file|wc|du)\b/.test(part.trim()));
+          // Lines and chained commands are checked one by one; a shell variable set to a path (F=x.docx) is not an access.
+          return s.split(/&&|\|\||;|\||\n/).some((part) => /\.docx\b/.test(part) && !/^\s*(stetdoc|ls|cp|mv|rm|test|\[|echo|cd|md5|shasum|sha256sum|stat|file|wc|du)\b/.test(part.trim()) && !/^[A-Za-z_][A-Za-z0-9_]*=\S*$/.test(part.trim()));
         }).map((b) => `${b.name}: \`${String(b.name === 'Bash' ? b.input.command : b.input.file_path).slice(0, 160).replace(/\n/g, ' ⏎ ')}\``);
         const manual = calls.some((b) => b.name === 'Bash' && /--manual/.test(b.input.command));
         const gs = r.graders || [];
