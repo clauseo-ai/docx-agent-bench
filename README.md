@@ -44,6 +44,11 @@ node scripts/agy-bench.mjs none short results/try/gemini-3.8-flash-medium/none/s
 - Each run gets its own root with `HOME=<root>/home` (the settings file is copied in) and the workspace
   `<root>/home/cwd`, the layout `claude plugin eval` uses, so the scaffolds and `report.sh` run unchanged. The agent
   gets the same PATH as in `bench.sh` and no benchmark variables.
+- agy runs every tool on the host (`--dangerously-skip-permissions`; Claude Code's eval sandbox does not apply), and in a
+  test an agent ran `ps aux`, found the runner's command line and read the case's graders in this repository. So agy runs
+  under macOS `sandbox-exec`: it cannot read or write the user's home, this repository, the temp folder or `/tmp`, except
+  its own run root and the binaries and tools it needs (agy, stetdoc, node, `$TOOLS`, `$ARMS`), and it cannot list other
+  processes. `AGY_SANDBOX=0` turns this off.
 - Arms: `stetdoc` runs `stetdoc init --project --agent antigravity` in the workspace (`.agents/skills/stetdoc/SKILL.md`
   and `AGENTS.md`; there is no docx guard hook as in the Claude Code plugin); `none` installs nothing;
   `anthropic-docx` copies Anthropic's docx skill into `.agents/skills/docx`; `adeu` copies the adeu-redlining skill
