@@ -51,11 +51,13 @@ violations() {
   if grep -q '^Validation: no violations' <<<"$out"; then echo 0; else
     sed -n 's/^Validation: \([0-9][0-9]*\) violation.*/\1/p' <<<"$out" | head -1; fi
 }
+# class_a FILE: the number of findings Word would reject or repair (everything but the lints below).
+class_a() { "$S" check "$1" --all 2>&1 | grep -E '^  [a-z_]+ \(' | grep -vcE '^  (schema_non_canonical_order|empty_properties|para_id_missing) \(' || true; }
 # findings FILE: every check finding, counted by code and part, so a reader can classify them.
 findings() { "$S" check "$1" --all 2>&1 | sed -n 's/^  \([a-z_]*\) (\([^) ]*\).*/\1 \2/p' | sort | uniq -c | sed 's/^ */finding: /'; }
 # body: the block lines of a view, without their refs.
 # Comment anchors ({c58}...{/c58}) are not text, so they are dropped.
-body() { grep -E '^[ptr][0-9]+ ' | sed -E 's/^[ptr][0-9]+ //; s/\{\/?c[0-9]+\}//g'; }
+body() { grep -E '^[ptr][0-9]+ ' | sed -E 's/^[ptr][0-9]+ //; s/\{\/?c[0-9]+\}//g; s/\{joins-next\} ?//g'; }
 m=$(metrics)
 [ -n "${EVAL_STETDOC_METRICS:-}" ] && echo "$m" >> "$EVAL_STETDOC_METRICS"
 
@@ -63,12 +65,15 @@ m=$(metrics)
   echo "eval-report 2"
   echo "metrics: $m"
   echo "stetdoc-on-path: $on_path"
-  worst=0
+  worst=0 worst_a=0
   while read -r sum path; do
     if [ ! -e "$path" ]; then echo "deleted: $path"
     elif [ "$(sha256 "$path")" = "$sum" ]; then echo "unchanged: $path"
     else echo "changed: $path"; fi
-    if [[ "$path" == "$(cat "$state/base-final")" || "$path" == "$(cat "$state/base-original")" ]]; then v=$(violations "$path"); [ "${v:-0}" -gt "$worst" ] && worst=$v; fi
+    if [[ "$path" == "$(cat "$state/base-final")" || "$path" == "$(cat "$state/base-original")" ]]; then
+      v=$(violations "$path"); [ "${v:-0}" -gt "$worst" ] && worst=$v
+      a=$(class_a "$path"); [ "${a:-0}" -gt "$worst_a" ] && worst_a=$a
+    fi
   done < "$state/before.sha"
   find . -type d -name '*.stet' -prune -o -type f ! -name "$report" -print | sort | while read -r f; do
     grep -q "  $f\$" "$state/before.sha" || echo "created: $f"
@@ -81,8 +86,11 @@ m=$(metrics)
     echo
     echo "== $f"
     v=$(violations "$f"); v=${v:--1}
-    # Valid: no more violations than the edited base, or only stetdoc lints Word accepts (class b).
-    if [ "$v" -ge 0 ] && { [ "$v" -le "$worst" ] || ! findings "$f" | grep -qvE ' (schema_non_canonical_order|empty_properties|para_id_missing) '; }; then echo "valid: yes"; else echo "valid: no"; fi
+    # Valid: no more findings Word would reject or repair than the edited base has. The lints Word
+    # accepts (non-canonical order, empty properties, a missing paragraph id) and notes do not count.
+    a=$(class_a "$f")
+    if [ "$v" -ge 0 ] && [ "${a:-0}" -le "$worst_a" ]; then echo "valid: yes"; else echo "valid: no"; fi
+    echo "class-a findings: ${a:-0} (base at most $worst_a)"
     echo "violations: $v (inputs at most $worst)"
     ledger=$("$S" view "$f" --revisions --full --all 2>&1)
     n=$(sed -n 's/^{summary: \([0-9][0-9]*\) tracked change.*/\1/p' <<<"$ledger" | head -1)
@@ -91,8 +99,8 @@ m=$(metrics)
     "$S" view "$f" --mode final --all 2>/dev/null | body > "$state/out-final.txt"
     body < "$state/base-original.txt" > "$state/b-original.txt"
     if [ -f "$norm" ]; then body < "$state/base-final.txt" | perl -p "$norm" > "$state/b-final.txt"; else body < "$state/base-final.txt" > "$state/b-final.txt"; fi
-    diff "$state/b-original.txt" "$state/out-original.txt" | grep '^[<>]' | head -3000 | cut -c1-1500 | sed 's/^/untracked-diff: /'
-    diff "$state/b-final.txt" "$state/out-final.txt" | grep '^[<>]' | head -3000 | cut -c1-1500 | sed 's/^/text-diff: /'
+    diff "$state/b-original.txt" "$state/out-original.txt" | grep '^[<>]' | head -3000 | cut -c1-8000 | sed 's/^/untracked-diff: /'
+    diff "$state/b-final.txt" "$state/out-final.txt" | grep '^[<>]' | head -3000 | cut -c1-8000 | sed 's/^/text-diff: /'
     echo "-- check"; "$S" check "$f" 2>&1 | grep '^Validation'; findings "$f"
     echo "-- revisions"; echo "$ledger"
     echo "-- comments"; "$S" view "$f" --comments --all 2>&1
