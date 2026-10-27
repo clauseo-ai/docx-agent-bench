@@ -22,7 +22,10 @@ claude=$(command -v claude)
 clean=$(tr ':' '\n' <<<"$PATH" | while read -r d; do [ -n "$d" ] && [ ! -x "$d/stetdoc" ] && echo "$d"; done | paste -sd: -)
 tools=$T/venv/bin:$T/bin
 if [ "$arm" = stetdoc ] && [ "$part" != without-stetdoc ]; then agentpath=$tools:$(dirname "$stetdoc_bin"):$clean; else agentpath=$tools:$clean; fi
-export EVAL_STETDOC_BIN=$stetdoc_bin EVAL_STETDOC_METRICS=$out/metrics.jsonl EVAL_OOXML_VALIDATE=$ooxml
+# The grading hook finds the stetdoc and validator paths and the metrics file in the suite copy (evals/stetdoc-bin,
+# evals/ooxml-validate-bin, evals/metrics-path), not in the environment: the agent inherits Claude Code's environment,
+# so no benchmark variable reaches it (they are removed below).
+echo "$out/metrics.jsonl" > "$suite/evals/metrics-path"
 adc=$HOME/.config/gcloud/application_default_credentials.json
 [ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] && [ -f "$adc" ] && export GOOGLE_APPLICATION_CREDENTIALS=$adc
 common=(--scaffold --trust-plugin --ablation none --model "${MODEL:-claude-opus-5-5}" --judge-model "${JUDGE:-claude-sonnet-5-5}" --no-publish
@@ -36,4 +39,6 @@ case "$part" in
   *) echo "unknown part $part" >&2; exit 2 ;;
 esac
 cd "$suite"
-PATH=$agentpath "$claude" plugin eval . --eval-dir "$dir" --output-dir "$out/eval" "${common[@]}" "$@" || true
+unset_bench=(-u EVAL_STETDOC_BIN -u EVAL_STETDOC_METRICS -u EVAL_OOXML_VALIDATE -u OOXML_VALIDATE -u STETDOC_BIN -u STETDOC_REPO
+  -u ARMS -u TOOLS -u MODEL -u JUDGE -u TAG -u RUNS -u LONG_RUNS -u J -u MODELS -u ARMS_LIST -u CAP -u VOTES)
+env "${unset_bench[@]}" PATH="$agentpath" "$claude" plugin eval . --eval-dir "$dir" --output-dir "$out/eval" "${common[@]}" "$@" || true

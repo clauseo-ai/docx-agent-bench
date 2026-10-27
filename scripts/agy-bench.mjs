@@ -10,7 +10,7 @@
 // report.sh's metrics, the case graders (regex, tool_used, llm) and verify.mjs / analyze.mjs work unchanged.
 // Output, like bench.sh: OUT/eval/aggregate-result.json, OUT/metrics.jsonl, OUT/reports/<case>-<id>.{txt,transcript.jsonl,agy.jsonl}.
 // Env: AGY (default ~/.local/bin/agy), AGY_MODEL (gemini-3.8-flash-medium), GOOGLE_GEMINI_BASE_URL (http://127.0.0.1:6969),
-// GEMINI_API_KEY (dummy), STETDOC_BIN, OOXML_VALIDATE, ARMS (/tmp/bench-arms), TOOLS (/tmp/bench-tools),
+// AGY_TIMEOUT (1800 s per run), GEMINI_API_KEY (dummy), STETDOC_BIN, OOXML_VALIDATE, ARMS (/tmp/bench-arms), TOOLS (/tmp/bench-tools),
 // JUDGE (claude-sonnet-5-5; JUDGE=0 skips llm graders), KEEP=1 keeps the run roots.
 import fs from 'fs'; import path from 'path'; import os from 'os'; import { spawn, execFileSync } from 'child_process';
 
@@ -58,9 +58,19 @@ const agentPath = [`${TOOLS}/venv/bin`, `${TOOLS}/bin`, ...(withStetdoc ? [path.
 function installArm(cwd, env) {
   if (arm === 'none') return;
   if (arm === 'stetdoc') { execFileSync(STETDOC, ['init', '--project', '--agent', 'antigravity'], { cwd, env, stdio: 'pipe' }); return; }
-  if (arm === 'anthropic-docx') { // hook, untested: the docx skill as a workspace skill
+  if (arm === 'anthropic-docx') { // Anthropic's docx skill as an Agent Skill of the workspace
     fs.cpSync(path.join(ARMS, 'anthropic-docx/skills/docx'), path.join(cwd, '.agents/skills/docx'), { recursive: true }); return; }
-  // anthropic-legal (skills plus commands) and adeu (an MCP server: `agy mcp add` into the run's home) are not wired yet.
+  if (arm === 'adeu') {
+    // The adeu-redlining Agent Skill in the workspace, and its MCP server (the same @adeu/mcp-server and command as the
+    // Claude Code arm's .mcp.json) in the run's ~/.gemini/config/mcp_config.json, where `agy mcp add` writes it.
+    fs.cpSync(path.join(ARMS, 'adeu/skills/adeu-redlining'), path.join(cwd, '.agents/skills/adeu-redlining'), { recursive: true });
+    const servers = JSON.parse(fs.readFileSync(path.join(ARMS, 'adeu/.mcp.json'), 'utf8')).mcpServers;
+    for (const s of Object.values(servers)) s.disabled = false;
+    fs.mkdirSync(path.join(env.HOME, '.gemini/config'), { recursive: true });
+    fs.writeFileSync(path.join(env.HOME, '.gemini/config/mcp_config.json'), JSON.stringify({ mcpServers: servers }, null, 2) + '\n');
+    return;
+  }
+  // anthropic-legal (skills plus commands, and remote connectors the Claude Code arm does not start) is not wired.
   throw new Error(`arm ${arm} has no Antigravity install yet (see installArm in scripts/agy-bench.mjs)`);
 }
 
@@ -136,7 +146,8 @@ function grade(caseDir, runRoot, trace, info) {
         passed = mt === 'not_contains' ? n === 0 : mt.startsWith('count:') ? n === Number(mt.slice(6)) : n > 0;
       } else if (meta.type === 'tool_used') {
         const re = meta.input_match ? new RegExp(meta.input_match) : null;
-        const n = info.calls.filter((c) => c.name === meta.tool && (!re || re.test(c.name === 'Bash' ? c.input.command : (c.input.file_path || JSON.stringify(c.input))))).length;
+        // Matched against the JSON of the input, as Claude Code's tool_used grader does.
+        const n = info.calls.filter((c) => c.name === meta.tool && (!re || re.test(JSON.stringify(c.name === 'Bash' ? { command: c.input.command } : c.input)))).length;
         passed = n >= (meta.min ?? 1) && (meta.max === undefined || n <= meta.max);
       } else if (meta.type === 'llm') {
         if (JUDGE === '0') { res.push({ name, passed: false, skipped: true, evidence: 'llm grader skipped (JUDGE=0)' }); continue; }
@@ -160,6 +171,27 @@ function sh(cmd, args, opts) {
     p.on('close', (code) => resolve({ code, stdout: so, stderr: se }));
   });
 }
+// agy runs every tool on the host with --dangerously-skip-permissions, and Claude Code's eval sandbox does not apply.
+// So agy and everything it starts run under macOS sandbox-exec: no reading or writing in the user's home (the bench
+// repo, its results and graders, other projects), in the temp folder (the suite copy, other runs) or in /tmp, except
+// the run's own root and the binaries and tools the agent needs; and no process listing (ps would show the runner's
+// command line). AGY_SANDBOX=0 turns it off.
+function sandbox(R) {
+  if (process.env.AGY_SANDBOX === '0' || process.platform !== 'darwin') return ['env', []]; // `env agy ...`: no sandbox
+  const real = (p) => { try { return fs.realpathSync(p); } catch { return p; } };
+  const q = (p) => JSON.stringify(real(p));
+  const allowRead = [path.dirname(AGY), path.dirname(STETDOC), TOOLS, ARMS, path.dirname(which('node') || '/usr/bin/node')].map(q).map((x) => `(subpath ${x})`).join(' ');
+  const profile = `(version 1)
+(allow default)
+(deny file-read-data file-write* (subpath ${q(HOME0)}) (subpath ${q(root)}) (subpath ${q(os.tmpdir())}) (subpath "/private/tmp"))
+(allow file-read-data ${allowRead})
+(allow file-read-data file-write* (subpath ${q(R)}))
+(deny process-info* (target others))
+`;
+  const f = path.join(path.dirname(R), path.basename(R) + '.sb'); fs.writeFileSync(f, profile); sandboxFiles.push(f);
+  return ['sandbox-exec', ['-f', f]];
+}
+const sandboxFiles = []; process.on('exit', () => sandboxFiles.forEach((f) => fs.rmSync(f, { force: true })));
 async function runOne(c, n) {
   const caseDir = path.join(E, partDir, c);
   const R = fs.mkdtempSync(path.join(os.tmpdir(), 'a-')); const id = path.basename(R);
@@ -168,7 +200,8 @@ async function runOne(c, n) {
   fs.copyFileSync(settings, path.join(home, '.gemini/antigravity-cli/settings.json'));
   // The agent's environment: no benchmark variables (the validator path, the metrics file), so it cannot use them.
   const inherited = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(EVAL_|OOXML_|STETDOC_|CLAUDE|ANTHROPIC_|KEEP$|JUDGE$|AGY)/.test(k)));
-  const agentEnv = { ...inherited, HOME: home, PATH: agentPath, GEMINI_API_KEY: process.env.GEMINI_API_KEY || 'dummy',
+  fs.mkdirSync(path.join(R, 'tmp'));
+  const agentEnv = { ...inherited, HOME: home, TMPDIR: path.join(R, 'tmp'), PATH: agentPath, GEMINI_API_KEY: process.env.GEMINI_API_KEY || 'dummy',
     GOOGLE_GEMINI_BASE_URL: process.env.GOOGLE_GEMINI_BASE_URL || 'http://127.0.0.1:6969' };
   // The harness's environment (scaffold and report.sh) adds what they read.
   const baseEnv = { ...agentEnv, EVAL_STETDOC_BIN: STETDOC, EVAL_OOXML_VALIDATE: OOXML, EVAL_STETDOC_METRICS: path.join(out, 'metrics.jsonl'), CLAUDE_PROJECT_DIR: cwd };
@@ -179,11 +212,14 @@ async function runOne(c, n) {
   if (sc.code !== 0) error = `scaffold failed: ${sc.stderr.slice(0, 300)}`;
   // agy's log goes straight to the results, outside the run root the agent can list.
   const keep = path.join(out, 'reports'); fs.mkdirSync(keep, { recursive: true });
-  const logFile = path.join(keep, `${c}-${id}.agy.log`);
+  const logFile = path.join(R, 'agy.log'); // inside the sandbox; copied to the results after the run
   const t0 = Date.now(); let lines = [];
   if (!error) {
-    const timeout = meta.meta.timeout_seconds || 600;
-    const r = await sh(AGY, ['-p', meta.body, '--model', MODEL, '--dangerously-skip-permissions', '--output-format', 'stream-json',
+    // One limit for every case (AGY_TIMEOUT, default 1800 s): Gemini steps through Vertex can be slow at times, and
+    // the case's timeout_seconds were set for Claude Code.
+    const timeout = Number(process.env.AGY_TIMEOUT || 1800);
+    const [cmd, pre] = sandbox(R);
+    const r = await sh(cmd, [...pre, AGY, '-p', meta.body, '--model', MODEL, '--dangerously-skip-permissions', '--output-format', 'stream-json',
       '--print-timeout', `${timeout}s`, '--log-file', logFile], { cwd, env: agentEnv, stdio: ['ignore', 'pipe', 'pipe'] });
     lines = r.stdout.split('\n').filter(Boolean);
     if (r.code !== 0) error = `agy exit ${r.code}: ${r.stderr.trim().slice(-300)}`;
@@ -194,7 +230,8 @@ async function runOne(c, n) {
   if (!error && !info.result) error = 'agy wrote no result event';
   // agy reports a print timeout as SUCCESS with an empty response; its log says so.
   const agyLog = fs.existsSync(logFile) ? fs.readFileSync(logFile, 'utf8') : '';
-  if (!error && /print timeout after/.test(agyLog)) error = `timed out after ${meta.meta.timeout_seconds || 600}s (agy print timeout)`;
+  if (agyLog) fs.writeFileSync(path.join(keep, `${c}-${id}.agy.log`), agyLog);
+  if (!error && /print timeout after/.test(agyLog)) error = `timed out after ${process.env.AGY_TIMEOUT || 1800}s (agy print timeout)`;
   const transcript = path.join(R, 'transcript.jsonl'); const traceText = info.tr.map((x) => JSON.stringify(x)).join('\n') + '\n';
   fs.writeFileSync(transcript, traceText);
   // The harness report, exactly as the Stop hook runs it (stdin carries the transcript path).

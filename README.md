@@ -46,8 +46,12 @@ node scripts/agy-bench.mjs none short results/try/gemini-3.8-flash-medium/none/s
   gets the same PATH as in `bench.sh` and no benchmark variables.
 - Arms: `stetdoc` runs `stetdoc init --project --agent antigravity` in the workspace (`.agents/skills/stetdoc/SKILL.md`
   and `AGENTS.md`; there is no docx guard hook as in the Claude Code plugin); `none` installs nothing;
-  `anthropic-docx` copies the skill into `.agents/skills/docx` (untested). `anthropic-legal` and `adeu` (an MCP server,
-  `agy mcp add` into the run's home) are not wired yet: see `installArm`.
+  `anthropic-docx` copies Anthropic's docx skill into `.agents/skills/docx`; `adeu` copies the adeu-redlining skill
+  into `.agents/skills/adeu-redlining` and writes its MCP server (the Claude Code arm's `.mcp.json`) into the run's
+  `~/.gemini/config/mcp_config.json`, where `agy mcp add` puts it. `anthropic-legal` is not wired (see `installArm`).
+- Every run has one limit, `AGY_TIMEOUT` (default 1800 s), whatever the case's `timeout_seconds`. agy reports a print
+  timeout as success with an empty reply; the runner reads agy's log and records it as an error.
+- `TAG=... RUNS=5 LONG_RUNS=2 scripts/agy-run-all.sh` runs every Antigravity arm, as `run-all.sh` does for Claude Code.
 - Parts: `short`, `long`, `without-stetdoc`. The stale case needs a seeded conversation, which agy's print mode cannot
   take, so it is not run.
 - After agy exits, the runner calls the harness's `report.sh` (the Claude Code Stop hook) directly, with a Claude-style
@@ -90,7 +94,10 @@ part is a Stop hook. When the agent stops, the hook has stetdoc read every .docx
 part, the revision ledger, the comments, the final text, `text-diff` lines (paragraphs whose final text differs from
 the base, after the case's `normalize.pl`) and `untracked-diff` lines (with every revision rejected, paragraphs that
 differ from the base's original text). The graders are regexes over that report. The hook also records turns, tool
-calls, tool errors, tokens and the transcript in `results/.../reports/`.
+calls, tool errors, tokens and the transcript in `results/.../reports/`. The hook finds the stetdoc and validator paths
+and the metrics file in files `bench.sh` writes into its copy of the suite, and `bench.sh` removes every benchmark
+variable (`OOXML_VALIDATE`, `EVAL_*`, `STETDOC_*`, `MODEL`, ...) from Claude Code's environment, so the agent cannot see
+the validator or the grading setup.
 
 **Validity** is judged by the Microsoft Open XML SDK validator, the same for every arm: an output is valid when the
 validator opens it and `--compare` against the edited input finds no new error. The comparison is count-based:

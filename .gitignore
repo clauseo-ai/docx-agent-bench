@@ -4,4 +4,6 @@
 /suite/evals/arm/
 /suite/evals/arm-name
 /suite/evals/stetdoc-bin
+/suite/evals/ooxml-validate-bin
+/suite/evals/metrics-path
 .DS_Store

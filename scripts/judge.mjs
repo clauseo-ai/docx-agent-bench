@@ -63,7 +63,7 @@ for (const model of fs.readdirSync(path.join(root, 'results', TAG)).filter((d) =
       const items = {};
       for (const r of rubric) { const p = votes.filter((v) => String(v[r.id]).toUpperCase() === 'PASS').length; items[r.id] = p * 2 > VOTES ? 'PASS' : 'FAIL'; }
       const passed = Object.values(items).filter((v) => v === 'PASS').length;
-      const line = { report: rep, model, arm, task, run_id: f.match(/(e-[A-Za-z0-9]+)\.txt$/)[1], passed, total: rubric.length, share: +(passed / rubric.length).toFixed(3), judge_cost_usd: +cost.toFixed(4), excerpt_chars: ex.length, items };
+      const line = { report: rep, model, arm, task, run_id: f.match(/([ea]-[A-Za-z0-9]+)\.txt$/)[1], passed, total: rubric.length, share: +(passed / rubric.length).toFixed(3), judge_cost_usd: +cost.toFixed(4), excerpt_chars: ex.length, items };
       fs.appendFileSync(out, JSON.stringify(line) + '\n');
       console.log(`${arm} ${task} ${line.run_id}: ${passed}/${rubric.length} ($${line.judge_cost_usd})`);
     }

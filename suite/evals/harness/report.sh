@@ -68,8 +68,10 @@ body() {
     cur != "" && cur ~ /\\$/ { sub(/ *\\$/, "", cur); cur = cur " " $0; next }
   END { if (cur != "") print cur }' | sed -E 's/^[ptr][0-9]+ //; s/\{\/?c[0-9]+\}//g; s/\{joins-next\} ?//g; s/ +/ /g'
 }
+# The metrics file: bench.sh writes its path into evals/metrics-path (the agy runner passes EVAL_STETDOC_METRICS).
+M="${EVAL_STETDOC_METRICS:-$(cat "$(dirname "$0")/../metrics-path" 2>/dev/null)}"
 m=$(metrics)
-[ -n "${EVAL_STETDOC_METRICS:-}" ] && echo "$m" >> "$EVAL_STETDOC_METRICS"
+[ -n "$M" ] && echo "$m" >> "$M"
 
 {
   echo "eval-report 2"
@@ -131,8 +133,8 @@ m=$(metrics)
   done
 } > "$report" 2>&1
 # Keep a copy of the report next to the metrics, as evidence for the benchmark write-up.
-if [ -n "${EVAL_STETDOC_METRICS:-}" ]; then
-  keep="$(dirname "$EVAL_STETDOC_METRICS")/reports"; mkdir -p "$keep"
+if [ -n "$M" ]; then
+  keep="$(dirname "$M")/reports"; mkdir -p "$keep"
   cp "$report" "$keep/$(cat "$state/case")-$(basename "${PWD%/home/cwd}").txt" 2>/dev/null
   t=$(jq -r '.transcript_path // empty' <<<"$input" 2>/dev/null)
   [ -n "$t" ] && [ -f "$t" ] && cp "$t" "$keep/$(cat "$state/case")-$(basename "${PWD%/home/cwd}").transcript.jsonl" 2>/dev/null
