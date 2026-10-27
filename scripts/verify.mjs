@@ -2,7 +2,7 @@
 // (each with eval/ or cases/, reports/ and metrics.jsonl).
 import fs from 'fs'; import path from 'path';
 const dir = path.resolve(process.argv[2]);
-const notAcc = (g) => g.startsWith('process-') || g === 'precondition' || g.startsWith('rubric-');
+const notAcc = (g) => g.startsWith('process-') || g.startsWith('secondary-') || g === 'precondition' || g.startsWith('rubric-');
 const rows = [];
 for (const [sub, only, drop] of [['short', null, 'stale-colleague-edit'], ['stale', 'stale-colleague-edit', null], ['without-stetdoc', null, null], ['long', null, null]]) {
   const d = path.join(dir, sub);

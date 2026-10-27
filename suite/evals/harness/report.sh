@@ -14,6 +14,9 @@ report=.eval-report.txt
 [ -f "$state/before.sha" ] || exit 0
 # stetdoc reads the outputs for every arm; bench.sh writes its absolute path into evals/stetdoc-bin.
 S="${EVAL_STETDOC_BIN:-$(cat "$(dirname "$0")/../stetdoc-bin" 2>/dev/null)}"
+# The neutral validity check: the Open XML SDK validator (ooxml-validate). bench.sh writes its path into
+# evals/ooxml-validate-bin from OOXML_VALIDATE; without it the report says "ooxml-valid: unavailable".
+O="${EVAL_OOXML_VALIDATE:-$(cat "$(dirname "$0")/../ooxml-validate-bin" 2>/dev/null)}"
 sha256() { if command -v sha256sum >/dev/null; then sha256sum "$1"; else shasum -a 256 "$1"; fi | cut -d' ' -f1; }
 on_path=no; command -v stetdoc >/dev/null 2>&1 && on_path=yes
 
@@ -88,6 +91,19 @@ m=$(metrics)
     v=$(violations "$f"); v=${v:--1}
     # Valid: no more findings Word would reject or repair than the edited base has. The lints Word
     # accepts (non-canonical order, empty properties, a missing paragraph id) and notes do not count.
+    # Validity, primary: the Open XML SDK validator opens the file, and compared with the edited input
+    # (count-based: a group of errors is new only where the output has more than the input) nothing is new.
+    base=$(cat "$state/base-final")
+    if [ -n "$O" ] && [ -x "$O" ]; then
+      oj=$("$O" --compare "$base" "$f" --json 2>/dev/null)
+      onew=$(jq -r '.newCount // "error"' <<<"$oj" 2>/dev/null); oopen=$(jq -r '.out.opened // false' <<<"$oj" 2>/dev/null)
+      if [ "$oopen" = true ] && [ "$onew" = 0 ]; then echo "ooxml-valid: yes"; else echo "ooxml-valid: no"; fi
+      echo "ooxml: opened $oopen, new $onew, output errors $(jq -r '.out.errorCount // "?"' <<<"$oj" 2>/dev/null), input errors $(jq -r '.base.errorCount // "?"' <<<"$oj" 2>/dev/null) ($base)"
+      jq -r '.new[]? | "ooxml-new: \(.delta) \(.id) \(.part // "-") \(.description | .[0:200])"' <<<"$oj" 2>/dev/null | head -40
+    else
+      echo "ooxml-valid: unavailable"
+    fi
+    # Validity, secondary: stetdoc check, counting only findings Word would reject or repair against the base.
     a=$(class_a "$f")
     if [ "$v" -ge 0 ] && [ "${a:-0}" -le "$worst_a" ]; then echo "valid: yes"; else echo "valid: no"; fi
     echo "class-a findings: ${a:-0} (base at most $worst_a)"

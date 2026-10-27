@@ -1,8 +1,8 @@
 ---
 type: regex
-pattern: '^valid: yes$'
+pattern: '^ooxml-valid: yes$'
 flags: m
 target: { source: file, path: .eval-report.txt }
 ---
 
-Accuracy: the .docx written passes stetdoc check with no violation the inputs did not already have.
+Accuracy: the Open XML SDK validator opens every .docx the agent wrote, and compared with the edited input it finds no new error.

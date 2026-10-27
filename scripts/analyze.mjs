@@ -9,7 +9,7 @@ const R = path.join(root, 'results', TAG);
 const ARMS = ['stetdoc', 'none', 'anthropic-docx', 'anthropic-legal', 'adeu'];
 const HAIKU = /haiku/;
 // Process notes are not accuracy; rubric-* exact-string graders are reported beside the judged rubric.
-const notAccuracy = (g) => g.startsWith('process-') || g === 'precondition' || g.startsWith('rubric-');
+const notAccuracy = (g) => g.startsWith('process-') || g.startsWith('secondary-') || g === 'precondition' || g.startsWith('rubric-');
 const tracking = new Set(['all-changes-tracked', 'author', 'payment-deleted', 'payment-inserted', 'law-deleted', 'law-inserted', 'many-revisions']);
 const rubric = {};
 const rf = path.join(R, 'rubric-scores.jsonl');
@@ -45,6 +45,7 @@ for (const model of fs.existsSync(R) ? fs.readdirSync(R).filter((d) => fs.statSy
             rubric_regex_passed: rx.filter((g) => g.passed).length, rubric_regex_total: rx.length,
             failed_accuracy: acc.filter((g) => !g.passed).map((g) => g.name).join(' '),
             failed_process: proc.filter((g) => !g.passed).map((g) => g.name).join(' '),
+            stetdoc_check: (gs.find((g) => g.name === 'secondary-stetdoc-check') || {}).passed === undefined ? '' : ((gs.find((g) => g.name === 'secondary-stetdoc-check')).passed ? 'pass' : 'fail'),
             turns: r.turns, hit_limit: /turn|timed out|timeout/i.test(r.error || '') ? 1 : 0,
             tool_calls: m.tool_calls ?? '', tool_errors: m.tool_errors ?? '',
             input_tokens: m.input_tokens != null ? m.input_tokens + m.cache_creation_tokens + m.cache_read_tokens : '',

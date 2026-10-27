@@ -21,7 +21,10 @@ One arm, one model, one part: `MODEL=claude-haiku-5-5 scripts/bench.sh stetdoc s
 `scripts/verify.mjs DIR` prints a per-run table (accuracy, turns, tool calls, tool errors with the failing command, any
 non-stetdoc tool touching a .docx, `--manual` on the indenture) for a fix-verify loop.
 
-Every run is a real model call on your account. The stetdoc command must be installed (`STETDOC_BIN` or PATH), because
+Every run is a real model call on your account. The validity check needs the Open XML SDK validator CLI
+`ooxml-validate` (`OOXML_VALIDATE=/path/to/ooxml-validate`, else PATH): a small .NET tool over DocumentFormat.OpenXml
+3.5.1 with `ooxml-validate FILE` and the count-based `ooxml-validate --compare BASE OUT [--json]`. Without it the
+primary validity criterion reports "unavailable" and fails. The stetdoc command must be installed (`STETDOC_BIN` or PATH), because
 the grading hook reads every arm's output with it. If Claude Code uses Vertex AI, `bench.sh` points
 `GOOGLE_APPLICATION_CREDENTIALS` at your application default credentials, because each run has a temporary home.
 
@@ -58,9 +61,12 @@ the base, after the case's `normalize.pl`) and `untracked-diff` lines (with ever
 differ from the base's original text). The graders are regexes over that report. The hook also records turns, tool
 calls, tool errors, tokens and the transcript in `results/.../reports/`.
 
-**Validity** counts only check findings Word would reject or repair (schema order, unknown attributes, duplicate ids),
-against the edited base document. A non-canonical element order, an empty property element, a missing paragraph id
-and notes are lints Word accepts, and are not counted.
+**Validity** is judged by the Microsoft Open XML SDK validator, the same for every arm: an output is valid when the
+validator opens it and `--compare` against the edited input finds no new error. The comparison is count-based:
+errors are grouped by id, part and description with numbers masked, and a group is new only where the output has more
+than the input, so errors already in the input are not charged to the agent. `stetdoc check` is kept as a secondary
+column (`secondary-stetdoc-check`, not accuracy). It counts only findings Word would reject or repair against the
+base, and ignores lints Word accepts: a non-canonical element order, an empty property element, a missing paragraph id.
 
 Graders named `process-*` (no unzip/XML/scripting, no tool errors, one-step commands, exactly one output) are process
 notes, never accuracy. Accuracy is the share of the remaining criteria passed, and a run is fully correct when all of
@@ -74,7 +80,8 @@ them pass.
   for every arm in the first runs.
 - The redline and rename prompts do not say "tracked changes"; `analyze.mjs` also reports accuracy without the
   tracking criteria.
-- LibreOffice is not used. stetdoc is the only reader of the outputs.
+- LibreOffice is not used. stetdoc reads the outputs for the content checks, and the Open XML SDK checks validity. Its
+  error set is not Word's, and it stops at the first package exception, so a low count can understate problems.
 
 ## Cost
 

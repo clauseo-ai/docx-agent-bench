@@ -14,12 +14,15 @@ suite=$(mktemp -d "${TMPDIR:-/tmp}/bench-suite-XXXXXX")
 trap 'rm -rf "$suite"' EXIT
 cp -R "$root/suite/evals" "$suite/"; cp -R "$A/$arm/." "$suite/evals/arm"
 echo "$arm" > "$suite/evals/arm-name"; echo "$stetdoc_bin" > "$suite/evals/stetdoc-bin"
+ooxml=${OOXML_VALIDATE:-$(command -v ooxml-validate || true)}
+[ -n "$ooxml" ] && [ -x "$ooxml" ] || echo "warning: no ooxml-validate (set OOXML_VALIDATE); the primary validity check will be unavailable" >&2
+echo "$ooxml" > "$suite/evals/ooxml-validate-bin"
 mkdir -p "$out"
 claude=$(command -v claude)
 clean=$(tr ':' '\n' <<<"$PATH" | while read -r d; do [ -n "$d" ] && [ ! -x "$d/stetdoc" ] && echo "$d"; done | paste -sd: -)
 tools=$T/venv/bin:$T/bin
 if [ "$arm" = stetdoc ] && [ "$part" != without-stetdoc ]; then agentpath=$tools:$(dirname "$stetdoc_bin"):$clean; else agentpath=$tools:$clean; fi
-export EVAL_STETDOC_BIN=$stetdoc_bin EVAL_STETDOC_METRICS=$out/metrics.jsonl
+export EVAL_STETDOC_BIN=$stetdoc_bin EVAL_STETDOC_METRICS=$out/metrics.jsonl EVAL_OOXML_VALIDATE=$ooxml
 adc=$HOME/.config/gcloud/application_default_credentials.json
 [ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] && [ -f "$adc" ] && export GOOGLE_APPLICATION_CREDENTIALS=$adc
 common=(--scaffold --trust-plugin --ablation none --model "${MODEL:-claude-opus-5-5}" --judge-model "${JUDGE:-claude-sonnet-5-5}" --no-publish
