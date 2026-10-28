@@ -26,6 +26,8 @@ if [ "$arm" = stetdoc ] && [ "$part" != without-stetdoc ]; then agentpath=$tools
 # evals/ooxml-validate-bin, evals/metrics-path), not in the environment: the agent inherits Claude Code's environment,
 # so no benchmark variable reaches it (they are removed below).
 echo "$out/metrics.jsonl" > "$suite/evals/metrics-path"
+# KEEP_OUTPUTS=1: the grading hook also copies each run's new or changed .docx files to $out/outputs/<case>-<id>/.
+[ "${KEEP_OUTPUTS:-}" = 1 ] && touch "$suite/evals/keep-outputs"
 adc=$HOME/.config/gcloud/application_default_credentials.json
 [ -z "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] && [ -f "$adc" ] && export GOOGLE_APPLICATION_CREDENTIALS=$adc
 common=(--scaffold --trust-plugin --ablation none --model "${MODEL:-claude-opus-5-5}" --judge-model "${JUDGE:-claude-sonnet-5-5}" --no-publish
@@ -39,6 +41,6 @@ case "$part" in
   *) echo "unknown part $part" >&2; exit 2 ;;
 esac
 cd "$suite"
-unset_bench=(-u EVAL_STETDOC_BIN -u EVAL_STETDOC_METRICS -u EVAL_OOXML_VALIDATE -u OOXML_VALIDATE -u STETDOC_BIN -u STETDOC_REPO
+unset_bench=(-u KEEP_OUTPUTS -u EVAL_STETDOC_BIN -u EVAL_STETDOC_METRICS -u EVAL_OOXML_VALIDATE -u OOXML_VALIDATE -u STETDOC_BIN -u STETDOC_REPO
   -u ARMS -u TOOLS -u MODEL -u JUDGE -u TAG -u RUNS -u LONG_RUNS -u J -u MODELS -u ARMS_LIST -u CAP -u VOTES)
 env "${unset_bench[@]}" PATH="$agentpath" "$claude" plugin eval . --eval-dir "$dir" --output-dir "$out/eval" "${common[@]}" "$@" || true

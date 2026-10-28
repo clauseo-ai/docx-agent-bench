@@ -11,7 +11,8 @@
 // Output, like bench.sh: OUT/eval/aggregate-result.json, OUT/metrics.jsonl, OUT/reports/<case>-<id>.{txt,transcript.jsonl,agy.jsonl}.
 // Env: AGY (default ~/.local/bin/agy), AGY_MODEL (gemini-3.8-flash-medium), GOOGLE_GEMINI_BASE_URL (http://127.0.0.1:6969),
 // AGY_TIMEOUT (1800 s per run), GEMINI_API_KEY (dummy), STETDOC_BIN, OOXML_VALIDATE, ARMS (/tmp/bench-arms), TOOLS (/tmp/bench-tools),
-// JUDGE (claude-sonnet-5-5; JUDGE=0 skips llm graders), KEEP=1 keeps the run roots.
+// JUDGE (claude-sonnet-5-5; JUDGE=0 skips llm graders), KEEP=1 keeps the run roots,
+// KEEP_OUTPUTS=1 copies each run's new or changed .docx files to OUT/outputs/<case>-<id>/.
 import fs from 'fs'; import path from 'path'; import os from 'os'; import { spawn, execFileSync } from 'child_process';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -199,12 +200,13 @@ async function runOne(c, n) {
   fs.mkdirSync(path.join(home, '.gemini/antigravity-cli'), { recursive: true });
   fs.copyFileSync(settings, path.join(home, '.gemini/antigravity-cli/settings.json'));
   // The agent's environment: no benchmark variables (the validator path, the metrics file), so it cannot use them.
-  const inherited = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(EVAL_|OOXML_|STETDOC_|CLAUDE|ANTHROPIC_|KEEP$|JUDGE$|AGY)/.test(k)));
+  const inherited = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(EVAL_|OOXML_|STETDOC_|CLAUDE|ANTHROPIC_|KEEP$|KEEP_OUTPUTS$|JUDGE$|AGY)/.test(k)));
   fs.mkdirSync(path.join(R, 'tmp'));
   const agentEnv = { ...inherited, HOME: home, TMPDIR: path.join(R, 'tmp'), PATH: agentPath, GEMINI_API_KEY: process.env.GEMINI_API_KEY || 'dummy',
     GOOGLE_GEMINI_BASE_URL: process.env.GOOGLE_GEMINI_BASE_URL || 'http://127.0.0.1:6969' };
   // The harness's environment (scaffold and report.sh) adds what they read.
-  const baseEnv = { ...agentEnv, EVAL_STETDOC_BIN: STETDOC, EVAL_OOXML_VALIDATE: OOXML, EVAL_STETDOC_METRICS: path.join(out, 'metrics.jsonl'), CLAUDE_PROJECT_DIR: cwd };
+  const baseEnv = { ...agentEnv, EVAL_STETDOC_BIN: STETDOC, EVAL_OOXML_VALIDATE: OOXML, EVAL_STETDOC_METRICS: path.join(out, 'metrics.jsonl'), CLAUDE_PROJECT_DIR: cwd,
+    ...(process.env.KEEP_OUTPUTS === '1' ? { EVAL_KEEP_OUTPUTS: '1' } : {}) };
   const meta = frontMatter(path.join(caseDir, 'prompt.md'));
   let error;
   try { installArm(cwd, agentEnv); } catch (e) { error = `arm install: ${e.message}`; }

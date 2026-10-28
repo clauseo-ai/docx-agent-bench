@@ -139,4 +139,15 @@ if [ -n "$M" ]; then
   t=$(jq -r '.transcript_path // empty' <<<"$input" 2>/dev/null)
   [ -n "$t" ] && [ -f "$t" ] && cp "$t" "$keep/$(cat "$state/case")-$(basename "${PWD%/home/cwd}").transcript.jsonl" 2>/dev/null
 fi
+# Opt-in (KEEP_OUTPUTS=1 for bench.sh or agy-bench.mjs): keep every .docx the agent created or changed, under
+# <out>/outputs/<case>-<id>/ with its path in the sandbox, so a person can open the files the report describes.
+# Not graded; bench.sh signals it with evals/keep-outputs, agy-bench.mjs with EVAL_KEEP_OUTPUTS (neither reaches the agent).
+if [ -n "$M" ] && { [ "${EVAL_KEEP_OUTPUTS:-}" = 1 ] || [ -f "$(dirname "$0")/../keep-outputs" ]; }; then
+  od="$(dirname "$M")/outputs/$(cat "$state/case")-$(basename "${PWD%/home/cwd}")"
+  find . -type d -name '*.stet' -prune -o -type f -name '*.docx' -print | while read -r f; do
+    before=$(grep "  $f\$" "$state/before.sha" | cut -d' ' -f1)
+    [ -n "$before" ] && [ "$before" = "$(sha256 "$f")" ] && continue
+    mkdir -p "$od/$(dirname "$f")" && cp "$f" "$od/$f"
+  done
+fi
 exit 0

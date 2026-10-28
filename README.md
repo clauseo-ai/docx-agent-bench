@@ -67,6 +67,9 @@ node scripts/agy-bench.mjs none short results/try/gemini-3.8-flash-medium/none/s
 - Output is laid out as `bench.sh`'s (`eval/aggregate-result.json`, `metrics.jsonl`, `reports/` with the report, the
   converted transcript, the raw `.agy.jsonl` stream and agy's log), so `verify.mjs` and `analyze.mjs` read it. Cost is
   not computed (0). `KEEP=1` keeps the run roots.
+- `KEEP_OUTPUTS=1` (for `bench.sh`, `run-all.sh` and `agy-bench.mjs`) copies every .docx a run created or changed to
+  `<out>/outputs/<case>-<id>/`, so the files the report describes can be opened in Word. It changes no grading and never
+  reaches the agent.
 
 ## Cases
 
