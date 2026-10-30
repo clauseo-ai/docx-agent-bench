@@ -138,11 +138,14 @@ m=$(metrics)
     echo "-- comments"; "$S" view "$f" --comments --all 2>&1
     echo "-- final text"; "$S" view "$f" --mode final --all 2>&1
   done
-} > "$report" 2>&1
+} > "$state/report.raw" 2>&1
+# The graders read the normalised report (no comment markers, no note on other authors' changes); see normalise.sh.
+"$(dirname "$0")/normalise.sh" < "$state/report.raw" > "$report"
 # Keep a copy of the report next to the metrics, as evidence for the benchmark write-up.
 if [ -n "$M" ]; then
   keep="$(dirname "$M")/reports"; mkdir -p "$keep"
   cp "$report" "$keep/$(cat "$state/case")-$(basename "${PWD%/home/cwd}").txt" 2>/dev/null
+  cp "$state/report.raw" "$keep/$(cat "$state/case")-$(basename "${PWD%/home/cwd}").raw" 2>/dev/null
   t=$(jq -r '.transcript_path // empty' <<<"$input" 2>/dev/null)
   [ -n "$t" ] && [ -f "$t" ] && cp "$t" "$keep/$(cat "$state/case")-$(basename "${PWD%/home/cwd}").transcript.jsonl" 2>/dev/null
 fi

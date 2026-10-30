@@ -121,6 +121,12 @@ screenshot) are in `results/TAG/word-verdicts.tsv`, the per-run result in `resul
 files Word must open (and the test files `build-fixtures.py` makes) into a folder with a manifest, for a Word that runs
 elsewhere, such as a macOS VM; `import` reads that run's verdicts back.
 
+The graders read the report through `suite/evals/harness/normalise.sh`, the same for every arm: comment range markers
+(`{c3}…{/c3}`) are removed with their text kept, and the reader's note on tracked changes by other authors is dropped.
+The raw report is kept beside it as `<case>-<id>.raw`. `scripts/rescore.mjs TAG` re-scores saved runs offline from their
+reports the same way (it first checks that the raw reports reproduce the stored verdicts) and writes an audit of what the
+normaliser changed; `node --test scripts/test/` tests the normaliser.
+
 Accuracy is the share of a case's graders passed (`precondition` and the long tasks' `rubric-*` exact-string items are
 reported separately). A run is **fully correct** when every accuracy grader passes, the run ended without an error, and
 every .docx it wrote is valid. Process is reported only as metrics: turns, tool calls, tool errors, time and cost.
