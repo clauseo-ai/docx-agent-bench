@@ -14,7 +14,8 @@ author_config() {
   fi
 }
 
-# setup NAME...: copies each fixture to docs/NAME.docx and records the case. The first fixture is
+# setup NAME...: copies each fixture to docs/NAME.docx and records the case. Fetched and built fixtures
+# (fixtures.tsv rows with a built: path) are looked up and sha-verified the same way. The first fixture is
 # the base both for "final text" and "text with every revision rejected" unless the case overrides
 # base-final / base-original after setup.
 setup() {

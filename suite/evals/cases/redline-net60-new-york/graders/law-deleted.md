@@ -5,4 +5,4 @@ flags: m
 target: { source: file, path: .eval-report.txt }
 ---
 
-Clause 23.1 (p273): Singapore is a tracked deletion by ER.
+Clause 23.1 (p273): Singapore is a tracked deletion.

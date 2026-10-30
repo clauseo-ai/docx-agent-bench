@@ -1,8 +1,8 @@
 ---
 type: regex
-pattern: '^unchanged: \./docs/isda-confirmation-v1\.docx$'
+pattern: '^unchanged: \./docs/tidemark-draft-confirmation\.docx$'
 flags: m
 target: { source: file, path: .eval-report.txt }
 ---
 
-The original docs/isda-confirmation-v1.docx is byte-identical after the run.
+The original docs/tidemark-draft-confirmation.docx is byte-identical after the run.

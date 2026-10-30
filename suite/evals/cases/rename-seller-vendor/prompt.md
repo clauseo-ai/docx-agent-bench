@@ -7,4 +7,4 @@ timeout_seconds: 600
 allowed_tools: [Read, Glob, Grep, Skill, Bash, Edit, Write]
 ---
 
-Change 'Seller' to 'Vendor' throughout docs/master-supply-agreement.docx.
+Change 'Seller' to 'Vendor' throughout docs/master-supply-agreement.docx, as tracked changes.

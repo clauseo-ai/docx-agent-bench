@@ -4,7 +4,9 @@
 # ledger, comments and final text:
 #   untracked-diff: lines where the text with every revision rejected differs from base-original
 #                   (an edit made without tracking it), and
-#   text-diff:      lines where the final text differs from base-final (after the case's normalize.pl),
+#   text-diff:      lines where the final text differs from base-final (after the case's normalize.pl), or,
+#                   when the scaffold names a grading reference in .eval-state/expected-final, from that
+#                   fixture read as final (it is never copied into the workspace),
 # each without the paragraph ref, so graders can say which paragraphs changed.
 set -uo pipefail
 input=$(cat)
@@ -59,14 +61,15 @@ class_a() { "$S" check "$1" --all 2>&1 | grep -E '^  [a-z_]+ \(' | grep -vcE '^ 
 # findings FILE: every check finding, counted by code and part, so a reader can classify them.
 findings() { "$S" check "$1" --all 2>&1 | sed -n 's/^  \([a-z_]*\) (\([^) ]*\).*/\1 \2/p' | sort | uniq -c | sed 's/^ */finding: /'; }
 # body: the block lines of a view, without their refs.
-# Comment anchors ({c58}...{/c58}) are not text, so they are dropped.
+# Comment anchors ({c58}...{/c58}) are not text, so they are dropped, as are empty paragraphs; spaces are
+# collapsed and trimmed, so the text comparisons are whitespace-normalized.
 # A block the view wraps continues on the next lines after a trailing backslash; those are joined, so a
 # wrap that falls elsewhere (the lines of the two modes differ in length) is not a difference.
 body() {
   awk '
     /^[ptr][0-9]+ / { if (cur != "") print cur; cur = $0; next }
     cur != "" && cur ~ /\\$/ { sub(/ *\\$/, "", cur); cur = cur " " $0; next }
-  END { if (cur != "") print cur }' | sed -E 's/^[ptr][0-9]+ //; s/\{\/?c[0-9]+\}//g; s/\{joins-next\} ?//g; s/ +/ /g'
+  END { if (cur != "") print cur }' | sed -E 's/^[ptr][0-9]+ //; s/\{\/?c[0-9]+\}//g; s/\{joins-next\} ?//g; s/ +/ /g; s/^ //; s/ $//' | grep -vE '^(\{style "[^"]*"\} ?)*$'
 }
 # The metrics file: bench.sh writes its path into evals/metrics-path (the agy runner passes EVAL_STETDOC_METRICS).
 M="${EVAL_STETDOC_METRICS:-$(cat "$(dirname "$0")/../metrics-path" 2>/dev/null)}"
@@ -92,6 +95,10 @@ m=$(metrics)
   done
   find . -type d -name '*.stet' -prune -print | sort | sed 's/^/leftover-working-copy: /'
   norm="$(dirname "$0")/../cases/$(cat "$state/case")/normalize.pl"
+  # A grading reference replaces base-final as the expected final text.
+  if [ -f "$state/expected-final" ]; then
+    "$S" view "$(dirname "$0")/../fixtures/$(cat "$state/expected-final").docx" --mode final --all > "$state/base-final.txt" 2>/dev/null
+  fi
   find . -type d -name '*.stet' -prune -o -type f -name '*.docx' -print | sort | while read -r f; do
     before=$(grep "  $f\$" "$state/before.sha" | cut -d' ' -f1)
     [ -n "$before" ] && [ "$before" = "$(sha256 "$f")" ] && continue

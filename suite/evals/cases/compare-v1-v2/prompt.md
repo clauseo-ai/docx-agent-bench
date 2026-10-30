@@ -7,4 +7,4 @@ timeout_seconds: 600
 allowed_tools: [Read, Glob, Grep, Skill, Bash, Edit, Write]
 ---
 
-Make me a redline comparing docs/isda-confirmation-v1.docx (original) against docs/isda-confirmation-v2.docx (revised).
+Make me a redline comparing docs/tidemark-draft-confirmation.docx (original) against docs/greenleaf-revised-confirmation.docx (revised).

@@ -1,5 +1,11 @@
-# name	sha256	path in harveyai/harvey-labs (MIT) at commit 465d1fcf270daa01b0d1d63e30e3da9876d7a268
+# name	sha256	path in harveyai/harvey-labs (MIT) at commit 465d1fcf270daa01b0d1d63e30e3da9876d7a268, or built:SOURCE
+# built:SOURCE rows are made by scripts/build-fixtures.py from the named fetched fixture (see that script).
 credit-agreement	7bc285a3d60f0b8c7bf5d499529cba20bdbbc8f8e183decf575f22fae519f595	tasks/banking-finance/extract-conditions-precedent-from-credit-agreement/documents/credit-agreement.docx
-isda-confirmation-v1	3e029fb822b9c2a18d162caab8b8a1f3bfc9f9895fe06ef2a4ffad1f59d677fd	tasks/contracts/banking/isda-confirmation-term-negotiation/documents/tidemark-draft-confirmation.docx
-isda-confirmation-v2	0c32b671c703a5d8d7c9797fa94ca4dd18a1f1c4df2c28b290aec02da7dbddaa	tasks/contracts/banking/isda-confirmation-term-negotiation/documents/greenleaf-marked-confirmation.docx
+tidemark-draft-confirmation	3e029fb822b9c2a18d162caab8b8a1f3bfc9f9895fe06ef2a4ffad1f59d677fd	tasks/contracts/banking/isda-confirmation-term-negotiation/documents/tidemark-draft-confirmation.docx
+greenleaf-marked-confirmation	0c32b671c703a5d8d7c9797fa94ca4dd18a1f1c4df2c28b290aec02da7dbddaa	tasks/contracts/banking/isda-confirmation-term-negotiation/documents/greenleaf-marked-confirmation.docx
 master-supply-agreement	9cdbabb37dc5e31b457c0b55b2e72410f4c79558b61e761d919cc02c05560268	tasks/arbitration-international-dispute-resolution/draft-statement-of-defense/documents/master-supply-agreement.docx
+stonehill-first-markup-csa	85b0f5706ca5c2f839ef839f6c44302042452daac2d2d776caa69f98d6067574	tasks/contracts/banking/credit-support-annex-first-turn-redline/documents/stonehill-first-markup-csa.docx
+greenleaf-revised-confirmation	124fc7eaf5a965d21e96608354380aa7bd06c90743a087cc1e095a9e1fa47083	built:greenleaf-marked-confirmation
+swap-confirmation-counterparty	a585a838000016cd22e867f69e64320e8f689d2d34fe5f058a3fc115ed67b86a	built:tidemark-draft-confirmation
+swap-confirmation-counterparty.expected	746e2167acea9a05fd4849777d74c84c379aab0df66e9cd8c33b06e4fedab59a	built:tidemark-draft-confirmation
+master-supply-agreement.redline	d1ebb0ff4eb53a79e9b1881128281fea1115bc35e48d4d53482c4f3b8f03f8ec	built:master-supply-agreement

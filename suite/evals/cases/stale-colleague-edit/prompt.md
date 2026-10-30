@@ -7,4 +7,4 @@ timeout_seconds: 600
 allowed_tools: [Read, Glob, Grep, Skill, Bash, Edit, Write]
 ---
 
-Also change the governing law to England and Wales, and update the same redline file.
+Also change the governing law to England and Wales as a tracked change, and update the same redline file.
