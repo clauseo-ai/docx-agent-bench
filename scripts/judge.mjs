@@ -28,7 +28,7 @@ function excerpt(report) {
 }
 
 function ask(rubric, ex) {
-  const prompt = `You grade a legal markup task against a rubric. Below is a report of what the agent produced, made by a tool (stetdoc) that read the output .docx files: for each file written, its tracked changes ("-- revisions": #id kind author date paragraph "text"), its comments ("-- comments"), and "text-diff" lines that show each changed paragraph before (<) and after (>) as read with all changes accepted. A cover note's full text is included when there is one. The agent's chat reply is not included; judge only the files.
+  const prompt = `You grade a legal markup task against a rubric. Below is a report of what the agent produced, made by a reader tool that read the output .docx files: for each file written, its tracked changes ("-- revisions": #id kind author date paragraph "text"), its comments ("-- comments"), and "text-diff" lines that show each changed paragraph before (<) and after (>) as read with all changes accepted. A cover note's full text is included when there is one. The agent's chat reply is not included; judge only the files.
 
 For each rubric item, answer PASS only if the report shows the item is met; otherwise FAIL. Reply with one JSON object and nothing else, mapping every item id to "PASS" or "FAIL".
 
@@ -55,7 +55,7 @@ for (const model of fs.readdirSync(path.join(root, 'results', TAG)).filter((d) =
   for (const [model, arm, rd] of reportDirs) { if (!fs.existsSync(rd)) continue;
     for (const f of fs.readdirSync(rd).filter((x) => x.startsWith('long-') && x.endsWith('.txt'))) {
       const rep = path.join(rd, f); if (done.has(rep)) continue;
-      const task = f.replace(/-e-[A-Za-z0-9]+\.txt$/, '');
+      const task = f.replace(/-[ea]-[A-Za-z0-9]+\.txt$/, '');
       const rubric = JSON.parse(fs.readFileSync(path.join(root, 'rubrics', task + '.json'), 'utf8'));
       const ex = excerpt(fs.readFileSync(rep, 'utf8'));
       const votes = []; let cost = 0;

@@ -7,6 +7,7 @@
 set -euo pipefail
 root=$(cd "$(dirname "$0")/.." && pwd)
 arm=$1 part=$2 out=$3; shift 3
+mkdir -p "$out"; out=$(cd "$out" && pwd)   # absolute: claude runs from the suite copy
 A=${ARMS:-/tmp/bench-arms}; T=${TOOLS:-/tmp/bench-tools}
 [ -d "$A/$arm" ] || { echo "no arm $A/$arm: run scripts/setup-arms.sh" >&2; exit 2; }
 stetdoc_bin=${STETDOC_BIN:-$(command -v stetdoc)}
@@ -20,7 +21,16 @@ echo "$ooxml" > "$suite/evals/ooxml-validate-bin"
 mkdir -p "$out"
 claude=$(command -v claude)
 clean=$(tr ':' '\n' <<<"$PATH" | while read -r d; do [ -n "$d" ] && [ ! -x "$d/stetdoc" ] && echo "$d"; done | paste -sd: -)
-tools=$T/venv/bin:$T/bin
+# The agent's shell runs in the eval's OS sandbox, which lets it read the loaded plugin folders but not /tmp or the
+# temp folder: with $T (default /tmp/bench-tools) on PATH, zsh found no python3 there and ran macOS /usr/bin/python3 3.9
+# without python-docx, and pandoc was unreadable (final-1). So the tools are cloned into the harness plugin, which every
+# arm loads: cp -c is an APFS clone (no extra space), and -L copies symlinks as files, since the eval's plugin check
+# flags a link that leaves the plugin's tree (the venv's python3 links to the base install). A venv runs from a new
+# folder when python3 is called directly: it finds pyvenv.cfg next to it.
+[ -x "$T/venv/bin/python3" ] && [ -x "$T/bin/pandoc" ] || { echo "no tools in $T: run scripts/setup-tools.sh" >&2; exit 2; }
+ht=$suite/evals/harness/tools; mkdir -p "$ht"
+cp -RLc "$T/venv" "$T/bin" "$ht/" 2>/dev/null || cp -RL "$T/venv" "$T/bin" "$ht/"
+tools=$ht/venv/bin:$ht/bin
 if [ "$arm" = stetdoc ] && [ "$part" != without-stetdoc ]; then agentpath=$tools:$(dirname "$stetdoc_bin"):$clean; else agentpath=$tools:$clean; fi
 # The grading hook finds the stetdoc and validator paths and the metrics file in the suite copy (evals/stetdoc-bin,
 # evals/ooxml-validate-bin, evals/metrics-path), not in the environment: the agent inherits Claude Code's environment,

@@ -11,10 +11,12 @@ later).
 ```
 scripts/setup-tools.sh                      # the PATH tools every arm gets (venv, pandoc) in /tmp/bench-tools
 STETDOC_REPO=~/src/stetdoc scripts/setup-arms.sh   # every arm's plugin, pinned, in /tmp/bench-arms
-scripts/fetch-fixtures.sh                   # the documents, by SHA-256
-TAG=frozen-1 RUNS=5 scripts/run-all.sh      # every model x arm: short tasks, the stale case, not-installed, long tasks
-node scripts/judge.mjs frozen-1             # Harvey's rubric for the long tasks (VOTES=3 for three votes)
-node scripts/analyze.mjs frozen-1           # results/frozen-1/runs.csv and the Markdown tables
+scripts/fetch-fixtures.sh                   # the documents, by SHA-256, and the ones built from them
+KEEP_OUTPUTS=1 TAG=final-2 RUNS=5 LONG_RUNS=2 scripts/run-all.sh       # Claude Code: every model x arm
+KEEP_OUTPUTS=1 TAG=final-2 RUNS=5 LONG_RUNS=2 scripts/agy-run-all.sh   # Antigravity (Gemini)
+node scripts/judge.mjs final-2              # Harvey's rubric for the long tasks (VOTES=3 for three votes)
+node scripts/word-validity.mjs final-2 triage && node scripts/word-validity.mjs final-2 word && node scripts/word-validity.mjs final-2 apply
+node scripts/analyze.mjs final-2            # results/final-2/runs.csv, tables.md (fully correct, Wilson intervals, bootstrap)
 ```
 
 One arm, one model, one part: `MODEL=claude-haiku-5-5 scripts/bench.sh stetdoc short results/try/haiku/stetdoc/short --runs 2 -j 4`.
@@ -79,12 +81,12 @@ node scripts/agy-bench.mjs none short results/try/gemini-3.8-flash-medium/none/s
 |---|---|---|
 | read-conditions-precedent | conditions precedent to the initial loan, with sections | the answer cites 4.01 and 4.02 (judged); nothing written |
 | redline-net60-new-york | net 60 and New York law, as a new file | tracked deletions and insertions in 11.1 and 23.1, final text right, no other paragraph changed, no untracked edit, original byte-identical, valid |
-| comment-liability-cap | comment on the liability cap asking for 2x annual fees | one comment thread in Clause 18 with that text, no tracked change, nothing else changed, exactly one .docx written or changed |
-| accept-reject-ambiguous | accept all but amount or date changes on 47 revisions | all resolved, text changes accepted, the reading stated or asked (judged) |
-| compare-v1-v2 | redline v1 against v2 | final text equals v2, text with all revisions rejected equals v1, at least 20 revisions, one author |
-| rename-seller-vendor | "Seller" to "Vendor" throughout | no Seller left, every change a tracked Seller to Vendor, nothing else changed |
-| chained-edits | three edits into one redline, the last rejecting the first | only the governing-law change remains, as tracked changes |
-| stale-colleague-edit | a second turn on a redline a colleague edited in between | the colleague's change kept and under their name, the new change made, the user told about the other author's change (judged) |
+| comment-liability-cap | comment on the liability cap asking for twice the 12-month delivered value | one comment thread in Clause 18 saying so (any wording), no tracked change, nothing else changed, exactly one .docx written or changed |
+| accept-reject-amounts-dates | 26 counterparty tracked changes: reject the 7 that change a dollar amount or a calendar date, accept the 19 others | a new .docx, no tracked change left, its text read as final equals the expected text (whitespace-normalized), original unchanged |
+| compare-v1-v2 | redline the Tidemark draft against Greenleaf's revised confirmation | final text equals the revised version, text with all revisions rejected equals the draft, at least 20 revisions, an author |
+| rename-seller-vendor | "Seller" to "Vendor" throughout, as tracked changes | no Seller left, every tracked deletion has Seller and every insertion Vendor, nothing else changed |
+| chained-edits | net 45 and English law as tracked changes into one redline, then reject the payment change | only the governing-law change remains, as tracked changes |
+| stale-colleague-edit | a second turn on a redline a colleague edited in between | the colleague's change kept and under their name, the new change made as a tracked change, nothing else changed |
 | not-installed (`without-stetdoc/`, stetdoc arm only) | the rename, with stetdoc off PATH | refuses without touching the file or offering another way (judged) |
 
 `suite/evals/long/`, three Harvey LAB tasks with their instructions and all their documents (emails and spreadsheets
@@ -107,27 +109,28 @@ and the metrics file in files `bench.sh` writes into its copy of the suite, and 
 variable (`OOXML_VALIDATE`, `EVAL_*`, `STETDOC_*`, `MODEL`, ...) from Claude Code's environment, so the agent cannot see
 the validator or the grading setup.
 
-**Validity** is judged by the Microsoft Open XML SDK validator, the same for every arm: an output is valid when the
-validator opens it and `--compare` against the edited input finds no new error. The comparison is count-based:
-errors are grouped by id, part and description with numbers masked, and a group is new only where the output has more
-than the input, so errors already in the input are not charged to the agent. `stetdoc check` is kept as a secondary
-column (`secondary-stetdoc-check`, not accuracy). It counts only findings Word would reject or repair against the
-base, and ignores lints Word accepts: a non-canonical element order, an empty property element, a missing paragraph id.
+**Validity** is judged by Microsoft Word: a written .docx is valid when it opens in Word for Mac with no error and no
+repair prompt. `scripts/word-validity.mjs` does this after a run (it needs `KEEP_OUTPUTS=1`, so every written .docx is
+kept). It triages each file with the report's two machine checks, the Open XML SDK validator (`ooxml-validate
+--compare` against the edited input: a new error, or a file it cannot open) and `stetdoc check` (more findings than the
+input), and opens every file either flags in Word with `word-check.sh` (driven through cua-driver; it never saves). Files
+clean under both count as valid, and a seeded random sample of 20 of them is opened in Word as well; if any of the
+sample fails, every file is opened. Neither machine check is a verdict. The Word verdicts (file, result, dialog,
+screenshot) are in `results/TAG/word-verdicts.tsv`, the per-run result in `results/TAG/validity.tsv`.
 
-Graders named `process-*` (no unzip/XML/scripting, no tool errors, one-step commands, exactly one output) are process
-notes, never accuracy. Accuracy is the share of the remaining criteria passed, and a run is fully correct when all of
-them pass.
+Accuracy is the share of a case's graders passed (`precondition` and the long tasks' `rubric-*` exact-string items are
+reported separately). A run is **fully correct** when every accuracy grader passes, the run ended without an error, and
+every .docx it wrote is valid. Process is reported only as metrics: turns, tool calls, tool errors, time and cost.
+Tracked changes are required only where the prompt asks for them.
 
 ## Known limits
 
 - Two runs of the stale case at the same time share one resumed conversation, so `run-all.sh` runs it alone with
   `-j 1`.
-- The judge graders (and the long rubric, one vote by default) can be lenient: the long rubric was near its ceiling
-  for every arm in the first runs.
-- The redline and rename prompts do not say "tracked changes"; `analyze.mjs` also reports accuracy without the
-  tracking criteria.
-- LibreOffice is not used. stetdoc reads the outputs for the content checks, and the Open XML SDK checks validity. Its
-  error set is not Word's, and it stops at the first package exception, so a low count can understate problems.
+- The judge graders (and the long rubric, one vote by default) can be lenient: the long rubric is near its ceiling for
+  most arms.
+- stetdoc reads the outputs for the content checks (`stetdoc view`), for every arm. No second reader is used.
+- Word's verdict is that of one Word version on one Mac (see the report); other Word versions may differ.
 
 ## Cost
 
