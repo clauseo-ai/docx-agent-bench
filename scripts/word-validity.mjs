@@ -2,6 +2,8 @@
 // Validity: a written .docx is valid when it opens in Microsoft Word desktop with no error and no repair prompt.
 //   node scripts/word-validity.mjs TAG triage   lists every .docx a run wrote (kept with KEEP_OUTPUTS=1) and triages it
 //   node scripts/word-validity.mjs TAG word     opens the files that need Word, one by one (resumable)
+//   node scripts/word-validity.mjs TAG batch DIR    copies those files (and the built test files) to DIR with a manifest
+//   node scripts/word-validity.mjs TAG import V.tsv reads the verdicts for a batch opened elsewhere
 //   node scripts/word-validity.mjs TAG apply    writes results/TAG/validity.tsv, one row per run
 // Triage only decides which files Word must open; it is never a verdict. A file goes to Word when the Open XML SDK
 // validator finds an error the edited input does not have (or cannot open it), or when stetdoc check finds more
@@ -13,7 +15,7 @@ import fs from 'fs'; import path from 'path'; import os from 'os'; import { exec
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const [TAG, mode] = process.argv.slice(2);
-if (!TAG || !['triage', 'word', 'apply'].includes(mode)) { console.error('usage: word-validity.mjs TAG triage|word|apply'); process.exit(2); }
+if (!TAG || !['triage', 'word', 'batch', 'import', 'apply'].includes(mode)) { console.error('usage: word-validity.mjs TAG triage|word|batch DIR|import VERDICTS.tsv|apply'); process.exit(2); }
 const R = path.join(root, 'results', TAG);
 const TRIAGE = path.join(R, 'validity-triage.tsv'), VERD = path.join(R, 'word-verdicts.tsv'), OUT = path.join(R, 'validity.tsv');
 const SHOTS = path.join(R, 'word-shots');
@@ -56,11 +58,16 @@ if (mode === 'triage') {
     rows.push([fileKey(r, f), f.kept, exists ? 'kept' : 'missing', f.sdkBad ? 'sdk-new-error' : 'sdk-clean', f.stetBad ? 'stetdoc-new-finding' : 'stetdoc-clean',
       f.sdkBad || f.stetBad ? 'word' : 'clean']);
   }
-  // Seeded sample of the clean files (mulberry32, seed 20261030), marked "sample".
+  // Seeded sample of the clean files (mulberry32, seed 20261030), marked "sample". A sample drawn by an earlier triage of
+  // this tag is kept as it was (runs added later, e.g. re-runs, do not redraw it).
+  const prevSample = new Set(tsv(TRIAGE).filter((x) => x[5] === 'sample').map((x) => x[0]));
   let seed = 20261030; const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const clean = rows.filter((x) => x[5] === 'clean' && x[2] === 'kept');
-  for (let i = clean.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [clean[i], clean[j]] = [clean[j], clean[i]]; }
-  for (const x of clean.slice(0, SAMPLE)) x[5] = 'sample';
+  if (prevSample.size) { for (const x of clean) if (prevSample.has(x[0])) x[5] = 'sample'; }
+  else {
+    for (let i = clean.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [clean[i], clean[j]] = [clean[j], clean[i]]; }
+    for (const x of clean.slice(0, SAMPLE)) x[5] = 'sample';
+  }
   fs.writeFileSync(TRIAGE, ['key\tkept\tstatus\tsdk\tstetdoc\tword'].concat(rows.map((x) => x.join('\t'))).join('\n') + '\n');
   const n = (k) => rows.filter((x) => x[5] === k).length;
   console.log(`${rs.length} runs, ${rows.length} written .docx (${missing} not kept): ${n('word')} to Word by triage, ${n('sample')} clean in the Word sample, ${n('clean')} clean not opened. ${TRIAGE}`);
@@ -93,6 +100,49 @@ if (mode === 'word') {
   }
   fs.rmSync(tmp, { recursive: true, force: true });
   if (!sampleFailed && tsv(VERD).some((x) => t.find((y) => y[0] === x[0] && y[5] === 'sample') && x[1] !== 'CLEAN')) console.log('a sampled clean file failed in Word: run `word` again to open every clean file');
+}
+
+// batch DIR: copies every file Word must open (the same list as `word`) into DIR, flat, with DIR/manifest.tsv
+// (copy name, key). The test files scripts/build-fixtures.py makes (built: rows) go in too, keyed fixture|NAME.
+// The copies can then be opened elsewhere (another machine or a VM); `import` reads the verdicts back.
+if (mode === 'batch') {
+  const dir = path.resolve(process.argv[4] || ''); if (!process.argv[4]) { console.error('usage: word-validity.mjs TAG batch DIR'); process.exit(2); }
+  const t = tsv(TRIAGE).slice(1); const done = new Set(tsv(VERD).map((x) => x[0]));
+  const sampleFailed = tsv(VERD).some((x) => t.find((y) => y[0] === x[0] && y[5] === 'sample') && x[1] !== 'CLEAN');
+  const todo = t.filter((x) => x[2] === 'kept' && (x[5] === 'word' || x[5] === 'sample' || (sampleFailed && x[5] === 'clean')) && !done.has(x[0])).map((x) => [x[0], x[1]]);
+  const ev = path.join(root, 'suite/evals');
+  for (const l of tsv(path.join(ev, 'fixtures.tsv'))) if (l[2]?.startsWith('built:')) todo.push([`fixture|${l[0]}.docx`, path.join(ev, 'fixtures', `${l[0]}.docx`)]);
+  for (const l of tsv(path.join(ev, 'long-fixtures.tsv'))) if (l[3]?.startsWith('built:')) todo.push([`fixture|${l[0]}/${l[1]}`, path.join(ev, 'long-fixtures', l[0], l[1])]);
+  fs.mkdirSync(dir, { recursive: true });
+  const man = [];
+  for (const [k, src] of todo) {
+    let name = k.replace(/\|\.\//, '|').replace(/[|/]+/g, '__').replace(/[^A-Za-z0-9._-]/g, '_'); if (!name.endsWith('.docx')) name += '.docx';
+    fs.copyFileSync(src, path.join(dir, name)); man.push([name, k].join('\t'));
+  }
+  fs.writeFileSync(path.join(dir, 'manifest.tsv'), man.join('\n') + '\n');
+  console.log(`${man.length} files (${man.filter((m) => m.includes('\tfixture|')).length} test files) copied to ${dir}`);
+}
+
+// import FILE.tsv: Word verdicts from a batch (word-check-vm.sh's results.tsv, or FILE, VERDICT, DIALOG[, SCREENSHOT]; FILE
+// matched by its name against the batch's manifest.tsv beside it, or MANIFEST; screenshots copied to word-shots/).
+// Run files go to word-verdicts.tsv, test files to word-fixtures.tsv.
+if (mode === 'import') {
+  const f = process.argv[4]; if (!f) { console.error('usage: word-validity.mjs TAG import VERDICTS.tsv [MANIFEST]'); process.exit(2); }
+  const man = new Map(tsv(process.argv[5] || path.join(path.dirname(path.resolve(f)), 'manifest.tsv')).map((x) => [x[0], x[1]]));
+  const FIX = path.join(R, 'word-fixtures.tsv'); const done = new Set([...tsv(VERD), ...tsv(FIX)].map((x) => x[0]));
+  let n = 0, skipped = 0;
+  for (const row of tsv(f)) {
+    // word-check-vm.sh rows are FILE, SHA256, VERDICT, SCREENSHOT, SECONDS, DIALOG; word-check.sh rows FILE, VERDICT, DIALOG.
+    const vm = /^[0-9a-f]{64}$/.test(row[1] || '');
+    const [file, verdict, dialog = '', shot0 = ''] = vm ? [row[0], row[2], row[5], row[3]] : row;
+    const k = man.get(path.basename(file || ''));
+    if (!k || !['CLEAN', 'REPAIR_PROMPT', 'ERROR'].includes(verdict)) { skipped++; if (k) fs.appendFileSync(VERD.replace(/\.tsv$/, '.retry.log'), [file, verdict, dialog].join('\t') + '\n'); continue; }
+    if (done.has(k)) continue;
+    let shot = shot0;
+    if (shot0 && fs.existsSync(shot0)) { fs.mkdirSync(SHOTS, { recursive: true }); shot = path.join(SHOTS, path.basename(file).replace(/\.docx$/, '') + path.extname(shot0)); fs.copyFileSync(shot0, shot); shot = path.relative(R, shot); }
+    fs.appendFileSync(k.startsWith('fixture|') ? FIX : VERD, [k, verdict, dialog.replace(/[\t\n]/g, ' '), shot].join('\t') + '\n'); done.add(k); n++;
+  }
+  console.log(`${n} verdicts imported, ${skipped} lines not a verdict or not in the manifest`);
 }
 
 if (mode === 'apply') {

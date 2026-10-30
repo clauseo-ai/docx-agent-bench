@@ -43,11 +43,17 @@ for (const model of fs.existsSync(R) ? dirs(R) : []) {
           const v = validity.get([model, arm, part, c.name, id].join('|'));
           const valid = v ? v.valid : 'missing';
           const rb = rubric[rep];
+          // Blocked by the harness: Claude Code's built-in safety check refused a tool call (it needs a person to approve, and
+          // plugin eval runs without one) and the run then wrote no .docx. Such runs leave every arm's denominator alike.
+          const tr = fs.existsSync(rep.replace(/\.txt$/, '.transcript.jsonl')) ? fs.readFileSync(rep.replace(/\.txt$/, '.transcript.jsonl'), 'utf8') : '';
+          const refused = /Permission to use \w+ has been denied because Claude Code is running in don't ask mode|denied by a built-in Claude Code safety check/.test(tr);
+          const wrote = /^(created|changed): .*\.docx$/m.test(text);
           rows.push({
             tag: TAG, kind: part === 'long' ? 'long' : 'short', model, arm, part, case: c.name, run: i + 1, id, models_seen: (m.models || []).join(' '),
             acc_passed: acc.filter((g) => g.passed).length, acc_total: acc.length,
             graders_correct: acc.length > 0 && acc.every((g) => g.passed) && !r.error ? 1 : 0,
             word_valid: valid, word_failures: v ? v.fails : '',
+            blocked: refused && !wrote ? 1 : 0,
             fully_correct: acc.length > 0 && acc.every((g) => g.passed) && !r.error && (valid === 'yes' || valid === '') ? 1 : 0,
             rubric_passed: rb ? rb.passed : '', rubric_total: rb ? rb.total : '', rubric_share: rb ? rb.share : '',
             rubric_regex_passed: rx.filter((g) => g.passed).length, rubric_regex_total: rx.length,
@@ -83,7 +89,7 @@ const geminiCost = (r) => (r.input_tokens === '' ? 0 : ((Number(r.input_tokens) 
 const cost = (r) => (HAIKU.test(r.model) ? r.cost_tokens_list_usd : /gemini/.test(r.model) ? geminiCost(r) : r.cost_usd);
 const wilson = (k, n) => { if (!n) return [0, 0]; const z = 1.96, p = k / n, d = 1 + z * z / n, c = (p + z * z / (2 * n)) / d, w = (z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d; return [Math.round(100 * Math.max(0, c - w)), Math.round(100 * Math.min(1, c + w))]; };
 const cell = (rs) => { const k = sum(rs, 'fully_correct'), n = rs.length; if (!n) return 'not run'; const [lo, hi] = wilson(k, n); return `${k}/${n} (${lo}–${hi})`; };
-const short = (r) => r.kind === 'short' && r.case !== 'not-installed';
+const short = (r) => r.kind === 'short' && r.case !== 'not-installed' && !r.blocked;
 const present = MODELS.filter((m) => rows.some((r) => r.model === m)).concat([...new Set(rows.map((r) => r.model))].filter((m) => !MODELS.includes(m)));
 const tasks = [...new Set(rows.filter(short).map((r) => r.case))].sort();
 const longTasks = [...new Set(rows.filter((r) => r.kind === 'long').map((r) => r.case))].sort();
@@ -96,10 +102,12 @@ P('## Short tasks, fully correct runs'); P();
 P('| arm | ' + present.join(' | ') + ' |'); P('|---|' + present.map(() => '---|').join(''));
 for (const a of ARMS) P(`| ${a} | ` + present.map((m) => cell(rows.filter((r) => r.model === m && r.arm === a && short(r)))).join(' | ') + ' |');
 P();
+const bl = rows.filter((r) => r.blocked);
+if (bl.length) { const g = {}; for (const r of bl) { const k = `${r.model} ${r.arm} ${r.case}`; g[k] = (g[k] || 0) + 1; } P('Not counted (stopped by Claude Code\'s safety prompt, which needs a person to approve): ' + Object.entries(g).map(([k, n]) => `${k} ${n}`).join('; ') + '.'); P(); }
 for (const m of present) {
   P(`### Per task, ${m} (fully correct / runs)`); P();
   P('| task | ' + ARMS.join(' | ') + ' |'); P('|---|' + ARMS.map(() => '---').join('|') + '|');
-  for (const t of tasks.concat(rows.some((r) => r.model === m && r.case === 'not-installed') ? ['not-installed'] : [])) P(`| ${t} | ` + ARMS.map((a) => { const x = rows.filter((r) => r.model === m && r.arm === a && r.case === t); return x.length ? `${sum(x, 'fully_correct')}/${x.length}` : 'n/a'; }).join(' | ') + ' |');
+  for (const t of tasks.concat(rows.some((r) => r.model === m && r.case === 'not-installed') ? ['not-installed'] : [])) P(`| ${t} | ` + ARMS.map((a) => { const x = rows.filter((r) => r.model === m && r.arm === a && r.case === t && !r.blocked); return x.length ? `${sum(x, 'fully_correct')}/${x.length}` : 'n/a'; }).join(' | ') + ' |');
   P();
 }
 // Task-clustered bootstrap: stetdoc minus another arm, pooled fully-correct rate over resampled tasks.
@@ -122,7 +130,7 @@ for (const m of present) for (const a of ARMS.slice(1)) { if (!rows.some((r) => 
 P();
 P('## Long tasks'); P();
 P('| model | arm | runs | fully correct (objective criteria + Word) | mean rubric share (judge) | exact-string rubric items | hit limit or error |'); P('|---|---|---|---|---|---|---|');
-for (const m of present) for (const a of ARMS) { const x = rows.filter((r) => r.model === m && r.arm === a && r.kind === 'long'); if (!x.length) continue; const j = x.filter((r) => r.rubric_total !== '');
+for (const m of present) for (const a of ARMS) { const x = rows.filter((r) => r.model === m && r.arm === a && r.kind === 'long' && !r.blocked); if (!x.length) continue; const j = x.filter((r) => r.rubric_total !== '');
   P(`| ${m} | ${a} | ${x.length} | ${sum(x, 'fully_correct')}/${x.length} | ${j.length ? Math.round((100 * j.reduce((s, r) => s + Number(r.rubric_share), 0)) / j.length) + '%' : 'not judged'} | ${sum(x, 'rubric_regex_passed')}/${sum(x, 'rubric_regex_total')} | ${x.filter((r) => r.error).length} |`); }
 P();
 P('## Process metrics (short tasks, medians per run; cost: Opus = Claude Code estimate, Haiku = tokens at list price, Gemini = tokens at assumed rates)'); P();

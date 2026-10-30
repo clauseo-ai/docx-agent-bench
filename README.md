@@ -16,6 +16,7 @@ KEEP_OUTPUTS=1 TAG=final-2 RUNS=5 LONG_RUNS=2 scripts/run-all.sh       # Claude 
 KEEP_OUTPUTS=1 TAG=final-2 RUNS=5 LONG_RUNS=2 scripts/agy-run-all.sh   # Antigravity (Gemini)
 node scripts/judge.mjs final-2              # Harvey's rubric for the long tasks (VOTES=3 for three votes)
 node scripts/word-validity.mjs final-2 triage && node scripts/word-validity.mjs final-2 word && node scripts/word-validity.mjs final-2 apply
+#   or, with Word on another machine or a VM: ... batch DIR (copies + manifest.tsv), open them there, ... import VERDICTS.tsv DIR/manifest.tsv
 node scripts/analyze.mjs final-2            # results/final-2/runs.csv, tables.md (fully correct, Wilson intervals, bootstrap)
 ```
 
@@ -116,7 +117,9 @@ kept). It triages each file with the report's two machine checks, the Open XML S
 input), and opens every file either flags in Word with `word-check.sh` (driven through cua-driver; it never saves). Files
 clean under both count as valid, and a seeded random sample of 20 of them is opened in Word as well; if any of the
 sample fails, every file is opened. Neither machine check is a verdict. The Word verdicts (file, result, dialog,
-screenshot) are in `results/TAG/word-verdicts.tsv`, the per-run result in `results/TAG/validity.tsv`.
+screenshot) are in `results/TAG/word-verdicts.tsv`, the per-run result in `results/TAG/validity.tsv`. `batch DIR` copies the
+files Word must open (and the test files `build-fixtures.py` makes) into a folder with a manifest, for a Word that runs
+elsewhere, such as a macOS VM; `import` reads that run's verdicts back.
 
 Accuracy is the share of a case's graders passed (`precondition` and the long tasks' `rubric-*` exact-string items are
 reported separately). A run is **fully correct** when every accuracy grader passes, the run ended without an error, and
@@ -134,6 +137,8 @@ Tracked changes are required only where the prompt asks for them.
 
 ## Cost
 
-Opus 5.5: about $0.2 to $0.9 per short run and $2 to $4.5 per long run. Haiku 5.5: about a cent per short run. A
-frozen run of 5 runs per short case and 1 per long task, 5 arms and both models, costs about $120 on Opus and $3 on
-Haiku, plus about $5 for judges.
+From final-2 (`results/final-2/runs.csv`, `tables.md`): Opus 5.5 about $0.26 per short run (median; $0.08 to $1.33) and
+$3.40 per long run ($1.54 to $5.08). Haiku 5.5 about a cent per short run and $0.77 per long run. Gemini 3.8 Flash, at
+assumed rates of $0.50 / $0.05 / $3 per million input / cached / output tokens, about $0.11 to $0.42 per short run
+(medians by arm). The whole suite (5 runs per short case, 2 per long task, every model and arm) cost about $157 on
+Opus, $24 on Haiku and $62 on Gemini, plus about $17 for judges.

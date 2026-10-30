@@ -8,8 +8,10 @@ TAG=${TAG:?set TAG}; RUNS=${RUNS:-5}; LONG_RUNS=${LONG_RUNS:-2}; J=${J:-3}
 AGY_MODELS=${AGY_MODELS:-gemini-3.8-flash-medium}; AGY_ARMS=${AGY_ARMS:-stetdoc none anthropic-docx adeu}
 for model in $AGY_MODELS; do for arm in $AGY_ARMS; do
   o=$root/results/$TAG/$model/$arm; mkdir -p "$o"
-  AGY_MODEL=$model node "$root/scripts/agy-bench.mjs" "$arm" short "$o/short" --runs "$RUNS" -j "$J" > "$o.short.log" 2>&1 || true
-  [ "$arm" = stetdoc ] && { AGY_MODEL=$model node "$root/scripts/agy-bench.mjs" "$arm" without-stetdoc "$o/without-stetdoc" --runs "$RUNS" -j "$J" > "$o.without.log" 2>&1 || true; }
-  AGY_MODEL=$model node "$root/scripts/agy-bench.mjs" "$arm" long "$o/long" --runs "$LONG_RUNS" -j "$J" > "$o.long.log" 2>&1 || true
+  # resume: a finished part is not run again (an interrupted part leaves a partial aggregate and "partial" in its log)
+  done_() { local l=$o.${1%-stetdoc}.log; [ -f "$o/$1/eval/aggregate-result.json" ] && ! grep -q 'partial (interrupted)' "$l" 2>/dev/null; }
+  done_ short || AGY_MODEL=$model node "$root/scripts/agy-bench.mjs" "$arm" short "$o/short" --runs "$RUNS" -j "$J" > "$o.short.log" 2>&1 || true
+  [ "$arm" = stetdoc ] && ! done_ without-stetdoc && { AGY_MODEL=$model node "$root/scripts/agy-bench.mjs" "$arm" without-stetdoc "$o/without-stetdoc" --runs "$RUNS" -j "$J" > "$o.without.log" 2>&1 || true; }
+  done_ long || AGY_MODEL=$model node "$root/scripts/agy-bench.mjs" "$arm" long "$o/long" --runs "$LONG_RUNS" -j "$J" > "$o.long.log" 2>&1 || true
 done; done
 echo "done $TAG (agy)"

@@ -34,4 +34,4 @@ change ACCEPT or REJECT and listed any it found debatable. Both matched the inte
 and both listed no change as debatable. The prompt is unchanged from the draft.
 
 **Fixture checks.** Open XML SDK validator: no error the base does not have (the base's own 5 table-border order errors
-remain). `stetdoc check`: no new finding. Microsoft Word for Mac 16.114.1: opens with no error and no repair prompt.
+remain). `stetdoc check`: no new finding. Microsoft Word for Mac 16.114.3 (build 16.114.26102720, in a macOS VM): opens with no error and no repair prompt, as does the `.expected` reference.
