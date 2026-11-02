@@ -22,7 +22,7 @@ final-2 is the run the stetdoc site quotes. It ran on 2026-10-30 and was scored 
   [`reports/final-2/README.md`](reports/final-2/README.md) names the command that produced each file.
 - Raw outputs (per-run reports, transcripts, written .docx files, Word screenshots): the GitHub release asset
   `docx-agent-bench-final-2-raw.tar.gz` at https://github.com/clauseo-ai/docx-agent-bench/releases/tag/final-2,
-  SHA-256 `SHA256_PENDING`. Text logs in it are redacted; the tarball's `REDACTIONS.md` lists each redaction.
+  SHA-256 `561991ee755391ef60c4a0f1a31b54d6e809603c50973064dadffdaebf6e87bc`. Text logs in it are redacted; the tarball's `REDACTIONS.md` lists each redaction.
 - Tags: `final-2` is the scoring commit `7cad905`. The runs used commit `2ce4d25`. No git hash is recorded in the
   results, so the run commit is inferred from file times: the outputs date from 2026-10-30 12:59 to 21:35 IST, after
   2ce4d25 was committed (12:46 IST). The `final-2` tag message gives the evidence (`git cat-file tag final-2`). Tag
@@ -181,17 +181,19 @@ credentials, because each run has a temporary home.
 This needs no agent or judge calls and no Word.
 
 ```sh
+shasum -a 256 -c docx-agent-bench-final-2-raw.tar.gz.sha256
+mkdir -p results && tar -xzf docx-agent-bench-final-2-raw.tar.gz -C results
+mv results/docx-agent-bench-final-2-raw results/final-2
+git show main:reports/final-2/rubric-scores.jsonl > results/final-2/rubric-scores.jsonl
 git checkout final-2
-mkdir -p results && tar -xzf docx-agent-bench-final-2-raw.tar.gz -C results   # gives results/final-2/
-cp reports/final-2/rubric-scores.jsonl results/final-2/rubric-scores.jsonl
 node scripts/rescore.mjs final-2
 node scripts/word-validity.mjs final-2 triage
 node scripts/word-validity.mjs final-2 apply
 node scripts/analyze.mjs final-2
 ```
 
-Check that the archive unpacks to `results/final-2/` before running; adjust the `-C` target if it does not. The copy
-of `rubric-scores.jsonl` is needed because the committed one has repo-relative paths. Then compare
+The committed `rubric-scores.jsonl` (added after the `final-2` tag, hence `git show main:`) replaces the archive's
+copy, whose paths are absolute and redacted. Then compare
 `results/final-2/` with `reports/final-2/`. On 2026-11-02 with Node 26.12.0, `tables.md`, `bootstrap.json`,
 `validity.tsv` and the rescore outputs came out byte-identical; `runs.csv` and `validity-triage.tsv` matched after the
 checkout's path prefix was replaced (reports/final-2/README.md lines 22-27, which also list the substitutions).
