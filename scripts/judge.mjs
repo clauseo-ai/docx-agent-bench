@@ -3,7 +3,7 @@
 //   node scripts/judge.mjs TAG     (VOTES=3 for a majority of three; default 1)
 // For each report it builds an excerpt (file status, and per written .docx its check, revision
 // ledger, comments and changed paragraphs; the full final text only for a cover note), asks
-// claude-sonnet-5-5 for a PASS/FAIL per rubric item three times, and keeps the majority.
+// claude-sonnet-5-5 for a PASS/FAIL per rubric item VOTES times (default 1), and keeps the majority.
 // Appends one JSON line per report to results/TAG/rubric-scores.jsonl; reports already scored are skipped.
 import fs from 'fs'; import path from 'path'; import { execFileSync } from 'child_process'; import os from 'os';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
