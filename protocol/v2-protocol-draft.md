@@ -97,7 +97,7 @@ Digest facts to set expectations:
 A unit is contaminated if its task directory, or the sha256 of any of its input documents, appears in any of these:
 - The stetdoc repo, including its whole git history (`git log -p --all`): especially `corpus/curated.tsv`, `corpus/pairs.tsv`, `crates/stetdoc-core/src/check/expected_findings.tsv`, `crates/stetdoc-testkit/src/bench/inputs.rs`, `evals/`.
 - docx-agent-bench, including `results/`.
-- `/Users/rohan/stetdoc-cc-test`.
+- The author's local benchmark scratch directory (outside both repositories).
 
 The digest found about 250 distinct contaminated directories. `pairs.tsv` alone covers 214 contracts directories from 131 base tasks in the `*redline*` and `*term-negotiation*` families, which is nearly every redline-turn task. The exact numbers come from the T2 script.
 
@@ -229,7 +229,7 @@ Applied to each `.docx` deliverable:
 
 ### 6.2 Uniform rules
 - **Union environment, identical in every arm:** Python 3.12 venv first on PATH (python-docx, lxml, defusedxml, openpyxl), pandoc, LibreOffice, Poppler, Node 22, uv. Versions are locked.
-- **Product binaries live only on their own arm's PATH.** The sandbox denies reads of other arms' install directories, `~/.cargo/bin`, the stetdoc and bench repos, and `/Users/rohan/stetdoc-cc-test`. This answers Stemma's finding that agents use any stronger tool they find on the host.
+- **Product binaries live only on their own arm's PATH.** The sandbox denies reads of other arms' install directories, `~/.cargo/bin`, the stetdoc and bench repos, and the author's local benchmark scratch directory. This answers Stemma's finding that agents use any stronger tool they find on the host.
 - **Hooks:** arm-specific hooks only if they ship in that product's default install, and that rule applies to every product. The harness adds no hook that affects the agent; grading runs after the agent exits.
 - **MCP schemas (decision 7):** **recommended** to disable Claude Code's tool-search deferral for every MCP arm, using the switch the pinned Claude Code version documents; verify its name. Stemma found that deferral blocks Haiku from MCP tools, and stetdoc, a CLI, would be immune to it. If no such switch exists, use the default and report invocation rates.
 - **python-docx availability (decision 9):** **recommended** to leave it available in every arm and measure bypass. This is closer to a real user's machine, and stetdoc's own hook blocks bypass only because that hook ships with the product.

@@ -41,9 +41,9 @@ node scripts/agy-bench.mjs stetdoc short results/try/gemini-3.8-flash-medium/ste
 node scripts/agy-bench.mjs none short results/try/gemini-3.8-flash-medium/none/short --case rename-seller-vendor
 ```
 
-- Auth with a Gemini API key against a local endpoint: `~/.gemini/antigravity-cli/settings.json` holds
-  `{"modelProvider":"gemini"}`, and the runner passes `GEMINI_API_KEY` (default `dummy`) and `GOOGLE_GEMINI_BASE_URL`
-  (default `http://127.0.0.1:6969`). `AGY_MODEL` picks the model (default `gemini-3.8-flash-medium`), `AGY` the binary.
+- Auth with a Gemini API key: `~/.gemini/antigravity-cli/settings.json` holds `{"modelProvider":"gemini"}`, and the
+  runner passes `GEMINI_API_KEY` (required) and, if set, `GOOGLE_GEMINI_BASE_URL` (unset: Google's public endpoint).
+  Every variable the scripts read is listed in `scripts/README.md`. `AGY_MODEL` picks the model (default `gemini-3.8-flash-medium`), `AGY` the binary.
 - Each run gets its own root with `HOME=<root>/home` (the settings file is copied in) and the workspace
   `<root>/home/cwd`, the layout `claude plugin eval` uses, so the scaffolds and `report.sh` run unchanged. The agent
   gets the same PATH as in `bench.sh` and no benchmark variables.

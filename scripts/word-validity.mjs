@@ -10,7 +10,9 @@
 // findings than the input had (the report's `ooxml-valid:`, `violations:` and `class-a findings:` lines). Files clean
 // under both are counted valid, and a seeded random sample of SAMPLE (default 20) of them is opened in Word too; if any
 // of the sample fails, every clean file is opened. Word verdicts go to results/TAG/word-verdicts.tsv (file, verdict,
-// dialog, screenshot), screenshots to results/TAG/word-shots/. Needs WORD_CHECK (default ~/stetdoc-cc-test/word-check.sh).
+// dialog, screenshot), screenshots to results/TAG/word-shots/. Word mode needs WORD_CHECK.
+// WORD_CHECK: an executable called as `WORD_CHECK FILE SHOTS_DIR` that opens FILE in Word and prints one line,
+// FILE<TAB>VERDICT<TAB>DIALOG[<TAB>SCREENSHOT]. It is not part of this repository (it drives Word on the local machine).
 import fs from 'fs'; import path from 'path'; import os from 'os'; import { execFileSync } from 'child_process';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -20,7 +22,8 @@ const R = path.join(root, 'results', TAG);
 const TRIAGE = path.join(R, 'validity-triage.tsv'), VERD = path.join(R, 'word-verdicts.tsv'), OUT = path.join(R, 'validity.tsv');
 const SHOTS = path.join(R, 'word-shots');
 const SAMPLE = Number(process.env.SAMPLE || 20);
-const WORD_CHECK = process.env.WORD_CHECK || path.join(os.homedir(), 'stetdoc-cc-test/word-check.sh');
+const WORD_CHECK = process.env.WORD_CHECK;
+if (mode === 'word' && !WORD_CHECK) { console.error('WORD_CHECK is not set: word mode needs a Word-opening script (see scripts/README.md), or use batch/import'); process.exit(2); }
 const tsv = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => l.split('\t')) : []);
 const dirs = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((x) => fs.statSync(path.join(d, x)).isDirectory()) : []);
 
