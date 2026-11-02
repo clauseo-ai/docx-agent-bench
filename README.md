@@ -32,6 +32,7 @@ final-2 is the run the stetdoc site quotes. It ran on 2026-10-30 and was scored 
 ### Results
 
 final-2 has 8 short tasks (7 edits and 1 read-only question) and 3 long Harvey LAB markups, on 3 models and 5 setups.
+Each short task ran 5 times per model and setup, and each long task 2 times.
 Gemini ran 4 setups and 7 short tasks: the legal plugin and the stale case were not run there. stetdoc had the fastest
 median time per short task on all three models. On correctness it tied with no plugin on all three models. On the long
 tasks, stetdoc's 6 of 6 per model means every file it wrote opened in Word without a repair prompt and the objective
