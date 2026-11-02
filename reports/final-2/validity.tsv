@@ -1,0 +1,690 @@
+model	arm	part	case	id	docx_written	opened_in_word	word_failures	valid	note
+claude-haiku-5-5	adeu	long	long-csa-counter-redline	e-K50Zqv	2	2		yes	
+claude-haiku-5-5	adeu	long	long-csa-counter-redline	e-yCmwb6	2	2		yes	
+claude-haiku-5-5	adeu	long	long-indenture-markup	e-PLPydZ	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-haiku-5-5	adeu	long	long-indenture-markup	e-WEdWvg	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-haiku-5-5	adeu	long	long-underwriting-markup	e-dGor1J	1	1		yes	
+claude-haiku-5-5	adeu	long	long-underwriting-markup	e-kgTQIt	1	1		yes	
+claude-haiku-5-5	adeu	short	accept-reject-amounts-dates	e-2YRDHb	1	1		yes	
+claude-haiku-5-5	adeu	short	accept-reject-amounts-dates	e-9BBq5N	1	1		yes	
+claude-haiku-5-5	adeu	short	accept-reject-amounts-dates	e-e3jPfG	1	1		yes	
+claude-haiku-5-5	adeu	short	accept-reject-amounts-dates	e-kL34bk	1	1		yes	
+claude-haiku-5-5	adeu	short	accept-reject-amounts-dates	e-qSpmDi	1	1		yes	
+claude-haiku-5-5	adeu	short	chained-edits	e-758QvH	1	1		yes	
+claude-haiku-5-5	adeu	short	chained-edits	e-UTC4pG	1	1		yes	
+claude-haiku-5-5	adeu	short	chained-edits	e-dntWig	1	1		yes	
+claude-haiku-5-5	adeu	short	chained-edits	e-v20eDj	1	1		yes	
+claude-haiku-5-5	adeu	short	chained-edits	e-zqC1Zv	1	1		yes	
+claude-haiku-5-5	adeu	short	comment-liability-cap	e-7rhizy	1	1		yes	
+claude-haiku-5-5	adeu	short	comment-liability-cap	e-9I2PTc	1	1		yes	
+claude-haiku-5-5	adeu	short	comment-liability-cap	e-FexImr	1	1		yes	
+claude-haiku-5-5	adeu	short	comment-liability-cap	e-blR5JB	1	1		yes	
+claude-haiku-5-5	adeu	short	comment-liability-cap	e-dEfA8U	1	1		yes	
+claude-haiku-5-5	adeu	short	compare-v1-v2	e-7LHFKA	1	1		yes	
+claude-haiku-5-5	adeu	short	compare-v1-v2	e-UbhVYJ	1	1		yes	
+claude-haiku-5-5	adeu	short	compare-v1-v2	e-dXOiiP	1	1		yes	
+claude-haiku-5-5	adeu	short	compare-v1-v2	e-fmuPsr	1	1		yes	
+claude-haiku-5-5	adeu	short	compare-v1-v2	e-niSm9R	1	1		yes	
+claude-haiku-5-5	adeu	short	read-conditions-precedent	e-84Sf5W	0	0			
+claude-haiku-5-5	adeu	short	read-conditions-precedent	e-K8OPyo	0	0			
+claude-haiku-5-5	adeu	short	read-conditions-precedent	e-P38YDv	0	0			
+claude-haiku-5-5	adeu	short	read-conditions-precedent	e-foAuZd	0	0			
+claude-haiku-5-5	adeu	short	read-conditions-precedent	e-pOMtoA	0	0			
+claude-haiku-5-5	adeu	short	redline-net60-new-york	e-7QKYbB	1	1		yes	
+claude-haiku-5-5	adeu	short	redline-net60-new-york	e-8rVCkh	1	1		yes	
+claude-haiku-5-5	adeu	short	redline-net60-new-york	e-k96gk7	1	1		yes	
+claude-haiku-5-5	adeu	short	redline-net60-new-york	e-mNTD3Q	1	1		yes	
+claude-haiku-5-5	adeu	short	redline-net60-new-york	e-sPiFtN	1	1		yes	
+claude-haiku-5-5	adeu	short	rename-seller-vendor	e-4MMVD2	1	1		yes	
+claude-haiku-5-5	adeu	short	rename-seller-vendor	e-7VzCls	1	1		yes	
+claude-haiku-5-5	adeu	short	rename-seller-vendor	e-FDtDZC	1	1		yes	
+claude-haiku-5-5	adeu	short	rename-seller-vendor	e-cezEI8	1	1		yes	
+claude-haiku-5-5	adeu	short	rename-seller-vendor	e-hzQeEi	1	1		yes	
+claude-haiku-5-5	adeu	short	stale-colleague-edit	e-4zMr0j	1	1		yes	
+claude-haiku-5-5	adeu	short	stale-colleague-edit	e-BOZIMz	1	1		yes	
+claude-haiku-5-5	adeu	short	stale-colleague-edit	e-QBCgwc	1	1		yes	
+claude-haiku-5-5	adeu	short	stale-colleague-edit	e-VcAWex	1	1		yes	
+claude-haiku-5-5	adeu	short	stale-colleague-edit	e-dUkR6O	1	1		yes	
+claude-haiku-5-5	adeu	stale	stale-colleague-edit	e-4ERACE	1	1		yes	
+claude-haiku-5-5	adeu	stale	stale-colleague-edit	e-Ho4cjk	1	1		yes	
+claude-haiku-5-5	adeu	stale	stale-colleague-edit	e-uEmpbJ	2	2		yes	
+claude-haiku-5-5	adeu	stale	stale-colleague-edit	e-yOpSvS	1	1		yes	
+claude-haiku-5-5	adeu	stale	stale-colleague-edit	e-yurQyE	1	1		yes	
+claude-haiku-5-5	anthropic-docx	long	long-csa-counter-redline	e-FbqpHA	2	2		yes	
+claude-haiku-5-5	anthropic-docx	long	long-csa-counter-redline	e-oAA4eZ	2	2		yes	
+claude-haiku-5-5	anthropic-docx	long	long-indenture-markup	e-D87ooZ	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-haiku-5-5	anthropic-docx	long	long-indenture-markup	e-FbiIBP	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-haiku-5-5	anthropic-docx	long	long-underwriting-markup	e-AFXy6d	1	1		yes	
+claude-haiku-5-5	anthropic-docx	long	long-underwriting-markup	e-we4HGT	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-ArwQlz	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-GMHQIj	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-NVyJB0	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-UWJ4jy	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-sELkZp	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	chained-edits	e-LZJ8di	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	chained-edits	e-UnOlhX	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	chained-edits	e-dr8C5A	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	chained-edits	e-kxHENL	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	chained-edits	e-myzfbA	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	comment-liability-cap	e-EEAhkN	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	comment-liability-cap	e-Fq2ix2	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	comment-liability-cap	e-OLGtQI	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	comment-liability-cap	e-n9U7cY	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	comment-liability-cap	e-yfb5WW	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	compare-v1-v2	e-AxLkiu	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	compare-v1-v2	e-DffOPs	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	compare-v1-v2	e-Hjtcsb	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	compare-v1-v2	e-adkeW1	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	compare-v1-v2	e-n7yGBB	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	read-conditions-precedent	e-6PCq7S	0	0			
+claude-haiku-5-5	anthropic-docx	short	read-conditions-precedent	e-KTTXgJ	0	0			
+claude-haiku-5-5	anthropic-docx	short	read-conditions-precedent	e-QNPBS5	0	0			
+claude-haiku-5-5	anthropic-docx	short	read-conditions-precedent	e-QrxDXd	0	0			
+claude-haiku-5-5	anthropic-docx	short	read-conditions-precedent	e-kuZft4	0	0			
+claude-haiku-5-5	anthropic-docx	short	redline-net60-new-york	e-3I8DfW	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	redline-net60-new-york	e-PZMlJD	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	redline-net60-new-york	e-a3EFxH	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	redline-net60-new-york	e-w02WcC	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	redline-net60-new-york	e-wfZNr6	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	rename-seller-vendor	e-ERDf0d	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	rename-seller-vendor	e-igFRSk	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	rename-seller-vendor	e-n590gr	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	rename-seller-vendor	e-yO9S7T	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	rename-seller-vendor	e-zzG2ud	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	stale-colleague-edit	e-Ra2d2p	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	stale-colleague-edit	e-SfHtNM	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	stale-colleague-edit	e-UC2Pgp	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	stale-colleague-edit	e-V8TDrx	1	1		yes	
+claude-haiku-5-5	anthropic-docx	short	stale-colleague-edit	e-mfvqi1	1	1		yes	
+claude-haiku-5-5	anthropic-docx	stale	stale-colleague-edit	e-7Bxjer	1	1		yes	
+claude-haiku-5-5	anthropic-docx	stale	stale-colleague-edit	e-hhUdeU	1	1		yes	
+claude-haiku-5-5	anthropic-docx	stale	stale-colleague-edit	e-u5Ebzb	1	1		yes	
+claude-haiku-5-5	anthropic-docx	stale	stale-colleague-edit	e-wMwPHn	1	1		yes	
+claude-haiku-5-5	anthropic-docx	stale	stale-colleague-edit	e-xjklyh	1	1		yes	
+claude-haiku-5-5	anthropic-legal	long	long-csa-counter-redline	e-7NL81D	2	2		yes	
+claude-haiku-5-5	anthropic-legal	long	long-csa-counter-redline	e-GSLFab	2	2		yes	
+claude-haiku-5-5	anthropic-legal	long	long-indenture-markup	e-TFo2ax	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-haiku-5-5	anthropic-legal	long	long-indenture-markup	e-yJgVWi	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-haiku-5-5	anthropic-legal	long	long-underwriting-markup	e-VK7U2I	1	1		yes	
+claude-haiku-5-5	anthropic-legal	long	long-underwriting-markup	e-vL7oSp	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-6HKb13	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-C2ANK2	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-STSoV5	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-hP5kZm	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-iSvn8j	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	chained-edits	e-6j3SCg	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	chained-edits	e-KAoCrK	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	chained-edits	e-kWLGB7	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	chained-edits	e-tgBJzd	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	chained-edits	e-yQK8pF	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	comment-liability-cap	e-7VB9SC	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	comment-liability-cap	e-NQE5Sz	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	comment-liability-cap	e-Z3JEL5	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	comment-liability-cap	e-cP0RkA	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	comment-liability-cap	e-wcEEuD	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	compare-v1-v2	e-GQuRZb	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	compare-v1-v2	e-Mhx6wj	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	compare-v1-v2	e-UNlsZX	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	compare-v1-v2	e-r0tgsi	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	compare-v1-v2	e-sS23ck	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	read-conditions-precedent	e-44okHl	0	0			
+claude-haiku-5-5	anthropic-legal	short	read-conditions-precedent	e-4DROcy	0	0			
+claude-haiku-5-5	anthropic-legal	short	read-conditions-precedent	e-HlzMfT	0	0			
+claude-haiku-5-5	anthropic-legal	short	read-conditions-precedent	e-OsSa1C	0	0			
+claude-haiku-5-5	anthropic-legal	short	read-conditions-precedent	e-nOSuA1	0	0			
+claude-haiku-5-5	anthropic-legal	short	redline-net60-new-york	e-0H2Gjx	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	redline-net60-new-york	e-5Vg0yu	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	redline-net60-new-york	e-6OZvvL	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	redline-net60-new-york	e-qAYIqF	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	redline-net60-new-york	e-tKBQ9n	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	rename-seller-vendor	e-3wySW0	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	rename-seller-vendor	e-6O398E	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	rename-seller-vendor	e-il6EmF	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	rename-seller-vendor	e-qZgrSn	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	rename-seller-vendor	e-t6OMeX	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	stale-colleague-edit	e-9fvLN1	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	stale-colleague-edit	e-Oow7KR	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	stale-colleague-edit	e-dVujcr	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	stale-colleague-edit	e-qjP2fv	1	1		yes	
+claude-haiku-5-5	anthropic-legal	short	stale-colleague-edit	e-wR8enj	1	1		yes	
+claude-haiku-5-5	anthropic-legal	stale	stale-colleague-edit	e-1ByNMA	1	1		yes	
+claude-haiku-5-5	anthropic-legal	stale	stale-colleague-edit	e-1KIUfJ	1	1		yes	
+claude-haiku-5-5	anthropic-legal	stale	stale-colleague-edit	e-20ZkAI	1	1		yes	
+claude-haiku-5-5	anthropic-legal	stale	stale-colleague-edit	e-A3mIwd	1	1		yes	
+claude-haiku-5-5	anthropic-legal	stale	stale-colleague-edit	e-bjMHsD	1	1		yes	
+claude-haiku-5-5	none	long	long-csa-counter-redline	e-2mVgW5	2	2		yes	
+claude-haiku-5-5	none	long	long-csa-counter-redline	e-4A7Qng	2	2		yes	
+claude-haiku-5-5	none	long	long-indenture-markup	e-EDTM5R	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-haiku-5-5	none	long	long-indenture-markup	e-zdWL5n	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-haiku-5-5	none	long	long-underwriting-markup	e-OhFLUA	1	1		yes	
+claude-haiku-5-5	none	long	long-underwriting-markup	e-yPurfy	1	1		yes	
+claude-haiku-5-5	none	short	accept-reject-amounts-dates	e-EwP4vP	1	1		yes	
+claude-haiku-5-5	none	short	accept-reject-amounts-dates	e-FeACaD	1	1		yes	
+claude-haiku-5-5	none	short	accept-reject-amounts-dates	e-FhADnj	1	1		yes	
+claude-haiku-5-5	none	short	accept-reject-amounts-dates	e-WmRtYj	1	1		yes	
+claude-haiku-5-5	none	short	accept-reject-amounts-dates	e-pTrqAW	1	1		yes	
+claude-haiku-5-5	none	short	chained-edits	e-7sx2c3	1	1		yes	
+claude-haiku-5-5	none	short	chained-edits	e-JgDW03	1	1		yes	
+claude-haiku-5-5	none	short	chained-edits	e-fDA6JX	1	1		yes	
+claude-haiku-5-5	none	short	chained-edits	e-hWhNxC	1	1		yes	
+claude-haiku-5-5	none	short	chained-edits	e-xm11xE	1	1		yes	
+claude-haiku-5-5	none	short	comment-liability-cap	e-OWuqFu	1	1		yes	
+claude-haiku-5-5	none	short	comment-liability-cap	e-dIhPVr	1	1		yes	
+claude-haiku-5-5	none	short	comment-liability-cap	e-ngU5G9	1	1		yes	
+claude-haiku-5-5	none	short	comment-liability-cap	e-t5rpuY	1	1		yes	
+claude-haiku-5-5	none	short	comment-liability-cap	e-xuEtEQ	1	1		yes	
+claude-haiku-5-5	none	short	compare-v1-v2	e-AXNoCy	1	1		yes	
+claude-haiku-5-5	none	short	compare-v1-v2	e-R6eqTd	1	1		yes	
+claude-haiku-5-5	none	short	compare-v1-v2	e-VouJki	1	1		yes	
+claude-haiku-5-5	none	short	compare-v1-v2	e-jaXDDa	1	1		yes	
+claude-haiku-5-5	none	short	compare-v1-v2	e-uTqd7g	1	1		yes	
+claude-haiku-5-5	none	short	read-conditions-precedent	e-1yeJwp	0	0			
+claude-haiku-5-5	none	short	read-conditions-precedent	e-4ZCfb0	0	0			
+claude-haiku-5-5	none	short	read-conditions-precedent	e-jumVUE	0	0			
+claude-haiku-5-5	none	short	read-conditions-precedent	e-rXJmHo	0	0			
+claude-haiku-5-5	none	short	read-conditions-precedent	e-wpb6L6	0	0			
+claude-haiku-5-5	none	short	redline-net60-new-york	e-6tFXGC	1	1		yes	
+claude-haiku-5-5	none	short	redline-net60-new-york	e-Rtc0zs	1	1		yes	
+claude-haiku-5-5	none	short	redline-net60-new-york	e-f6hs98	1	1		yes	
+claude-haiku-5-5	none	short	redline-net60-new-york	e-i7ALJa	1	1		yes	
+claude-haiku-5-5	none	short	redline-net60-new-york	e-oBb7GQ	1	1		yes	
+claude-haiku-5-5	none	short	rename-seller-vendor	e-2LJrfw	1	1		yes	
+claude-haiku-5-5	none	short	rename-seller-vendor	e-2cguid	1	1		yes	
+claude-haiku-5-5	none	short	rename-seller-vendor	e-CqU3yt	1	1		yes	
+claude-haiku-5-5	none	short	rename-seller-vendor	e-ZBzbPd	1	1		yes	
+claude-haiku-5-5	none	short	rename-seller-vendor	e-jTvqv0	1	1		yes	
+claude-haiku-5-5	none	short	stale-colleague-edit	e-DxjzpI	1	1		yes	
+claude-haiku-5-5	none	short	stale-colleague-edit	e-INkfrf	1	1		yes	
+claude-haiku-5-5	none	short	stale-colleague-edit	e-ZQLzTz	1	1		yes	
+claude-haiku-5-5	none	short	stale-colleague-edit	e-mfHqWW	1	1		yes	
+claude-haiku-5-5	none	short	stale-colleague-edit	e-nSLfPL	1	1		yes	
+claude-haiku-5-5	none	stale	stale-colleague-edit	e-2M7K21	1	1		yes	
+claude-haiku-5-5	none	stale	stale-colleague-edit	e-JDxt0m	1	1		yes	
+claude-haiku-5-5	none	stale	stale-colleague-edit	e-bCVPEZ	1	1		yes	
+claude-haiku-5-5	none	stale	stale-colleague-edit	e-sbRegI	1	1		yes	
+claude-haiku-5-5	none	stale	stale-colleague-edit	e-wjF0HD	1	1		yes	
+claude-haiku-5-5	stetdoc	long	long-csa-counter-redline	e-R1CSNa	2	2		yes	
+claude-haiku-5-5	stetdoc	long	long-csa-counter-redline	e-XWW5WH	2	2		yes	
+claude-haiku-5-5	stetdoc	long	long-indenture-markup	e-0g89lR	1	1		yes	
+claude-haiku-5-5	stetdoc	long	long-indenture-markup	e-bZvpYj	1	1		yes	
+claude-haiku-5-5	stetdoc	long	long-underwriting-markup	e-MSqx7x	1	1		yes	
+claude-haiku-5-5	stetdoc	long	long-underwriting-markup	e-fw9i8i	1	1		yes	
+claude-haiku-5-5	stetdoc	short	accept-reject-amounts-dates	e-0I8aBR	1	1		yes	
+claude-haiku-5-5	stetdoc	short	accept-reject-amounts-dates	e-NSVGXI	1	1		yes	
+claude-haiku-5-5	stetdoc	short	accept-reject-amounts-dates	e-QvlqgH	1	1		yes	
+claude-haiku-5-5	stetdoc	short	accept-reject-amounts-dates	e-YZjUps	1	1		yes	
+claude-haiku-5-5	stetdoc	short	accept-reject-amounts-dates	e-cLSO7h	1	1		yes	
+claude-haiku-5-5	stetdoc	short	chained-edits	e-1OjzOu	1	1		yes	
+claude-haiku-5-5	stetdoc	short	chained-edits	e-9X4dTE	1	1		yes	
+claude-haiku-5-5	stetdoc	short	chained-edits	e-Vt2lul	1	1		yes	
+claude-haiku-5-5	stetdoc	short	chained-edits	e-k4WssB	1	1		yes	
+claude-haiku-5-5	stetdoc	short	chained-edits	e-zoPTZd	1	1		yes	
+claude-haiku-5-5	stetdoc	short	comment-liability-cap	e-6VzgTr	1	1		yes	
+claude-haiku-5-5	stetdoc	short	comment-liability-cap	e-IiJ41G	1	1		yes	
+claude-haiku-5-5	stetdoc	short	comment-liability-cap	e-JgE3BH	1	1		yes	
+claude-haiku-5-5	stetdoc	short	comment-liability-cap	e-N16j7t	1	1		yes	
+claude-haiku-5-5	stetdoc	short	comment-liability-cap	e-WUpiBP	1	1		yes	
+claude-haiku-5-5	stetdoc	short	compare-v1-v2	e-0WTOGH	1	1		yes	
+claude-haiku-5-5	stetdoc	short	compare-v1-v2	e-RjF1LV	1	1		yes	
+claude-haiku-5-5	stetdoc	short	compare-v1-v2	e-aHnE4V	1	1		yes	
+claude-haiku-5-5	stetdoc	short	compare-v1-v2	e-f0Gv80	1	1		yes	
+claude-haiku-5-5	stetdoc	short	compare-v1-v2	e-tu7OU7	1	1		yes	
+claude-haiku-5-5	stetdoc	short	read-conditions-precedent	e-FUyqxr	0	0			
+claude-haiku-5-5	stetdoc	short	read-conditions-precedent	e-Go1ylO	0	0			
+claude-haiku-5-5	stetdoc	short	read-conditions-precedent	e-NPyjRu	0	0			
+claude-haiku-5-5	stetdoc	short	read-conditions-precedent	e-fDOnfk	0	0			
+claude-haiku-5-5	stetdoc	short	read-conditions-precedent	e-rPSNFF	0	0			
+claude-haiku-5-5	stetdoc	short	redline-net60-new-york	e-6vDP63	1	1		yes	
+claude-haiku-5-5	stetdoc	short	redline-net60-new-york	e-IuM0AZ	1	1		yes	
+claude-haiku-5-5	stetdoc	short	redline-net60-new-york	e-O5cG2P	1	1		yes	
+claude-haiku-5-5	stetdoc	short	redline-net60-new-york	e-P0TwuZ	1	1		yes	
+claude-haiku-5-5	stetdoc	short	redline-net60-new-york	e-qZeIgI	1	1		yes	
+claude-haiku-5-5	stetdoc	short	rename-seller-vendor	e-1D8noX	1	1		yes	
+claude-haiku-5-5	stetdoc	short	rename-seller-vendor	e-8Lhg9A	1	1		yes	
+claude-haiku-5-5	stetdoc	short	rename-seller-vendor	e-JtxXe6	1	1		yes	
+claude-haiku-5-5	stetdoc	short	rename-seller-vendor	e-RllXiG	1	1		yes	
+claude-haiku-5-5	stetdoc	short	rename-seller-vendor	e-oVoGKy	1	1		yes	
+claude-haiku-5-5	stetdoc	short	stale-colleague-edit	e-HP0CMf	1	1		yes	
+claude-haiku-5-5	stetdoc	short	stale-colleague-edit	e-SwiQzF	1	1		yes	
+claude-haiku-5-5	stetdoc	short	stale-colleague-edit	e-jsItup	1	1		yes	
+claude-haiku-5-5	stetdoc	short	stale-colleague-edit	e-slclX0	1	1		yes	
+claude-haiku-5-5	stetdoc	short	stale-colleague-edit	e-xJQDJc	1	1		yes	
+claude-haiku-5-5	stetdoc	stale	stale-colleague-edit	e-1CEsb1	1	1		yes	
+claude-haiku-5-5	stetdoc	stale	stale-colleague-edit	e-7Rpuhh	1	1		yes	
+claude-haiku-5-5	stetdoc	stale	stale-colleague-edit	e-8OnRJO	1	1		yes	
+claude-haiku-5-5	stetdoc	stale	stale-colleague-edit	e-AeXr4b	1	1		yes	
+claude-haiku-5-5	stetdoc	stale	stale-colleague-edit	e-Yqtydp	1	1		yes	
+claude-haiku-5-5	stetdoc	without-stetdoc	not-installed	e-8WOSpd	0	0			
+claude-haiku-5-5	stetdoc	without-stetdoc	not-installed	e-A2Z6lv	0	0			
+claude-haiku-5-5	stetdoc	without-stetdoc	not-installed	e-YZx4P3	0	0			
+claude-haiku-5-5	stetdoc	without-stetdoc	not-installed	e-fr8WtB	0	0			
+claude-haiku-5-5	stetdoc	without-stetdoc	not-installed	e-sewfb8	0	0			
+claude-opus-5-5	adeu	long	long-csa-counter-redline	e-K487XH	2	2		yes	
+claude-opus-5-5	adeu	long	long-csa-counter-redline	e-YeFn7N	2	2		yes	
+claude-opus-5-5	adeu	long	long-indenture-markup	e-AxdZNk	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-opus-5-5	adeu	long	long-indenture-markup	e-nQpG3L	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-opus-5-5	adeu	long	long-underwriting-markup	e-Jmb0V3	1	1		yes	
+claude-opus-5-5	adeu	long	long-underwriting-markup	e-sw2ZcH	1	1		yes	
+claude-opus-5-5	adeu	short	accept-reject-amounts-dates	e-6YqR5Y	1	1		yes	
+claude-opus-5-5	adeu	short	accept-reject-amounts-dates	e-IW3zgu	1	1		yes	
+claude-opus-5-5	adeu	short	accept-reject-amounts-dates	e-cbBuIz	1	1		yes	
+claude-opus-5-5	adeu	short	accept-reject-amounts-dates	e-yLv55l	1	1		yes	
+claude-opus-5-5	adeu	short	accept-reject-amounts-dates	e-zCNLtk	1	1		yes	
+claude-opus-5-5	adeu	short	chained-edits	e-31vZWI	1	1		yes	
+claude-opus-5-5	adeu	short	chained-edits	e-GqfJZa	1	1		yes	
+claude-opus-5-5	adeu	short	chained-edits	e-d2daTc	1	1		yes	
+claude-opus-5-5	adeu	short	chained-edits	e-ePl7wH	1	1		yes	
+claude-opus-5-5	adeu	short	chained-edits	e-hJ1KpW	1	1		yes	
+claude-opus-5-5	adeu	short	comment-liability-cap	e-1hSPd2	1	1		yes	
+claude-opus-5-5	adeu	short	comment-liability-cap	e-PEAsV0	1	1		yes	
+claude-opus-5-5	adeu	short	comment-liability-cap	e-geDaFZ	1	1		yes	
+claude-opus-5-5	adeu	short	comment-liability-cap	e-oDFh5w	1	1		yes	
+claude-opus-5-5	adeu	short	comment-liability-cap	e-yC01oi	1	1		yes	
+claude-opus-5-5	adeu	short	compare-v1-v2	e-Vyxkx1	1	1		yes	
+claude-opus-5-5	adeu	short	compare-v1-v2	e-foqpIS	1	1		yes	
+claude-opus-5-5	adeu	short	compare-v1-v2	e-i7M3q8	1	1		yes	
+claude-opus-5-5	adeu	short	compare-v1-v2	e-jEKrtV	1	1		yes	
+claude-opus-5-5	adeu	short	compare-v1-v2	e-upuZgp	1	1		yes	
+claude-opus-5-5	adeu	short	read-conditions-precedent	e-5TrsXq	0	0			
+claude-opus-5-5	adeu	short	read-conditions-precedent	e-GF1UAG	0	0			
+claude-opus-5-5	adeu	short	read-conditions-precedent	e-X10lKL	0	0			
+claude-opus-5-5	adeu	short	read-conditions-precedent	e-hv0xK1	0	0			
+claude-opus-5-5	adeu	short	read-conditions-precedent	e-uNAie7	0	0			
+claude-opus-5-5	adeu	short	redline-net60-new-york	e-8LxSPd	1	1		yes	
+claude-opus-5-5	adeu	short	redline-net60-new-york	e-EtZDkY	1	1		yes	
+claude-opus-5-5	adeu	short	redline-net60-new-york	e-IqFDXv	1	1		yes	
+claude-opus-5-5	adeu	short	redline-net60-new-york	e-opgYqu	1	1		yes	
+claude-opus-5-5	adeu	short	redline-net60-new-york	e-rg3c91	1	1		yes	
+claude-opus-5-5	adeu	short	rename-seller-vendor	e-FIF3pF	1	1		yes	
+claude-opus-5-5	adeu	short	rename-seller-vendor	e-TR7PaR	1	1		yes	
+claude-opus-5-5	adeu	short	rename-seller-vendor	e-UNeI4v	1	1		yes	
+claude-opus-5-5	adeu	short	rename-seller-vendor	e-iRfLPa	1	1		yes	
+claude-opus-5-5	adeu	short	rename-seller-vendor	e-zqf8OY	1	1		yes	
+claude-opus-5-5	adeu	short	stale-colleague-edit	e-4XDWtZ	1	1		yes	
+claude-opus-5-5	adeu	short	stale-colleague-edit	e-MdRI8p	1	1		yes	
+claude-opus-5-5	adeu	short	stale-colleague-edit	e-OGcNHt	1	1		yes	
+claude-opus-5-5	adeu	short	stale-colleague-edit	e-XPZBMr	1	1		yes	
+claude-opus-5-5	adeu	short	stale-colleague-edit	e-zEtDFN	1	1		yes	
+claude-opus-5-5	adeu	stale	stale-colleague-edit	e-FpWF3X	1	1		yes	
+claude-opus-5-5	adeu	stale	stale-colleague-edit	e-KAlJTC	1	1		yes	
+claude-opus-5-5	adeu	stale	stale-colleague-edit	e-ZGZBIN	1	1		yes	
+claude-opus-5-5	adeu	stale	stale-colleague-edit	e-aMT3o4	1	1		yes	
+claude-opus-5-5	adeu	stale	stale-colleague-edit	e-uYS0Ni	1	1		yes	
+claude-opus-5-5	anthropic-docx	long	long-csa-counter-redline	e-9h2c7w	2	2		yes	
+claude-opus-5-5	anthropic-docx	long	long-csa-counter-redline	e-WkReFb	2	2		yes	
+claude-opus-5-5	anthropic-docx	long	long-indenture-markup	e-0fUPVm	1	1		yes	
+claude-opus-5-5	anthropic-docx	long	long-indenture-markup	e-IUg1u4	1	1		yes	
+claude-opus-5-5	anthropic-docx	long	long-underwriting-markup	e-0bRyFR	1	1		yes	
+claude-opus-5-5	anthropic-docx	long	long-underwriting-markup	e-M8A9WM	1	1	./docs/marked-up-underwriting-agreement.docx: REPAIR_PROMPT	no	
+claude-opus-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-A5oIwt	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-DFDAA0	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-Gs4r8z	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-qIjjdE	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	accept-reject-amounts-dates	e-qrM64c	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	chained-edits	e-FNPt2o	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	chained-edits	e-O76L7j	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	chained-edits	e-jfvRR5	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	chained-edits	e-y47aTa	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	chained-edits	e-yVmJgO	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	comment-liability-cap	e-DUMgxS	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	comment-liability-cap	e-GMpljo	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	comment-liability-cap	e-LPjBTe	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	comment-liability-cap	e-lGa16g	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	comment-liability-cap	e-rCk8Cl	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	compare-v1-v2	e-IFvU6E	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	compare-v1-v2	e-hVHfuS	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	compare-v1-v2	e-nb19IR	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	compare-v1-v2	e-q7qPaP	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	compare-v1-v2	e-vhqT0E	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	read-conditions-precedent	e-8wJwKD	0	0			
+claude-opus-5-5	anthropic-docx	short	read-conditions-precedent	e-R5jUXw	0	0			
+claude-opus-5-5	anthropic-docx	short	read-conditions-precedent	e-atQBW3	0	0			
+claude-opus-5-5	anthropic-docx	short	read-conditions-precedent	e-nL4Dzt	0	0			
+claude-opus-5-5	anthropic-docx	short	read-conditions-precedent	e-zIZSY8	0	0			
+claude-opus-5-5	anthropic-docx	short	redline-net60-new-york	e-0oOyam	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	redline-net60-new-york	e-IW4wNY	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	redline-net60-new-york	e-VHKUMt	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	redline-net60-new-york	e-uU6A9a	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	redline-net60-new-york	e-zg31ZF	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	rename-seller-vendor	e-BmpD9p	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	rename-seller-vendor	e-LlGb0o	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	rename-seller-vendor	e-NzFuTx	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	rename-seller-vendor	e-Wd372j	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	rename-seller-vendor	e-qLKtmJ	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	stale-colleague-edit	e-5a0ZT6	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	stale-colleague-edit	e-BEBFVZ	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	stale-colleague-edit	e-TfonH6	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	stale-colleague-edit	e-ghg69x	1	1		yes	
+claude-opus-5-5	anthropic-docx	short	stale-colleague-edit	e-khY8Hl	1	1		yes	
+claude-opus-5-5	anthropic-docx	stale	stale-colleague-edit	e-4g9MJH	1	1		yes	
+claude-opus-5-5	anthropic-docx	stale	stale-colleague-edit	e-FCWHfN	1	1		yes	
+claude-opus-5-5	anthropic-docx	stale	stale-colleague-edit	e-Rrl5Y1	1	1		yes	
+claude-opus-5-5	anthropic-docx	stale	stale-colleague-edit	e-dbe8b7	1	1		yes	
+claude-opus-5-5	anthropic-docx	stale	stale-colleague-edit	e-u3pNmc	1	1		yes	
+claude-opus-5-5	anthropic-legal	long	long-csa-counter-redline	e-gwvlA1	2	2		yes	
+claude-opus-5-5	anthropic-legal	long	long-csa-counter-redline	e-mBN48y	2	2		yes	
+claude-opus-5-5	anthropic-legal	long	long-indenture-markup	e-7folRS	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-opus-5-5	anthropic-legal	long	long-indenture-markup	e-fRnvAg	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-opus-5-5	anthropic-legal	long	long-underwriting-markup	e-FlUa4R	1	1		yes	
+claude-opus-5-5	anthropic-legal	long	long-underwriting-markup	e-ca3inV	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-H4ueRx	1	1	./docs/swap-confirmation-resolved.docx: REPAIR_PROMPT	no	
+claude-opus-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-XsCfdl	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-ZnOyfG	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-lIkmJE	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	accept-reject-amounts-dates	e-zbrXoF	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	chained-edits	e-9aNimA	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	chained-edits	e-SfobQG	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	chained-edits	e-jFARzr	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	chained-edits	e-nMP8pY	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	chained-edits	e-ns2xSl	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	comment-liability-cap	e-7Y3kzS	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	comment-liability-cap	e-CQcbLt	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	comment-liability-cap	e-KJJRaI	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	comment-liability-cap	e-mHaVlJ	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	comment-liability-cap	e-t644e2	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	compare-v1-v2	e-2EjCQH	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	compare-v1-v2	e-RQkmlc	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	compare-v1-v2	e-fk1qrW	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	compare-v1-v2	e-l11bLU	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	compare-v1-v2	e-njTIm2	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	read-conditions-precedent	e-0rwZnd	0	0			
+claude-opus-5-5	anthropic-legal	short	read-conditions-precedent	e-7GwwGO	0	0			
+claude-opus-5-5	anthropic-legal	short	read-conditions-precedent	e-FLWgeU	0	0			
+claude-opus-5-5	anthropic-legal	short	read-conditions-precedent	e-jhi6VF	0	0			
+claude-opus-5-5	anthropic-legal	short	read-conditions-precedent	e-tGmeVc	0	0			
+claude-opus-5-5	anthropic-legal	short	redline-net60-new-york	e-RX4CGG	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	redline-net60-new-york	e-T4G48b	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	redline-net60-new-york	e-YU5gtB	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	redline-net60-new-york	e-dzImLW	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	redline-net60-new-york	e-uBplUl	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	rename-seller-vendor	e-4k7XSd	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	rename-seller-vendor	e-5F901d	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	rename-seller-vendor	e-S4xfnA	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	rename-seller-vendor	e-ebtb5h	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	rename-seller-vendor	e-lKDVpe	1	1		yes	
+claude-opus-5-5	anthropic-legal	short	stale-colleague-edit	e-4JUQFA	0	0			
+claude-opus-5-5	anthropic-legal	short	stale-colleague-edit	e-gDW1Vn	0	0			
+claude-opus-5-5	anthropic-legal	short	stale-colleague-edit	e-gRsbWj	0	0			
+claude-opus-5-5	anthropic-legal	short	stale-colleague-edit	e-lrCCmM	0	0			
+claude-opus-5-5	anthropic-legal	short	stale-colleague-edit	e-sZRTfO	0	0			
+claude-opus-5-5	anthropic-legal	stale	stale-colleague-edit	e-GhNWeb	1	1		yes	
+claude-opus-5-5	anthropic-legal	stale	stale-colleague-edit	e-ISYP5E	0	0			
+claude-opus-5-5	anthropic-legal	stale	stale-colleague-edit	e-qdf343	0	0			
+claude-opus-5-5	anthropic-legal	stale	stale-colleague-edit	e-wrD14O	1	1		yes	
+claude-opus-5-5	anthropic-legal	stale	stale-colleague-edit	e-xehUo0	0	0			
+claude-opus-5-5	none	long	long-csa-counter-redline	e-hhpb3y	2	2		yes	
+claude-opus-5-5	none	long	long-csa-counter-redline	e-xjJc3A	2	2		yes	
+claude-opus-5-5	none	long	long-indenture-markup	e-AX3F9H	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-opus-5-5	none	long	long-indenture-markup	e-nKM1al	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+claude-opus-5-5	none	long	long-underwriting-markup	e-7ySnHs	1	1		yes	
+claude-opus-5-5	none	long	long-underwriting-markup	e-HIrl8e	1	1		yes	
+claude-opus-5-5	none	short	accept-reject-amounts-dates	e-GSleLl	1	1		yes	
+claude-opus-5-5	none	short	accept-reject-amounts-dates	e-J2OPh3	1	1		yes	
+claude-opus-5-5	none	short	accept-reject-amounts-dates	e-SNnsiA	1	1		yes	
+claude-opus-5-5	none	short	accept-reject-amounts-dates	e-p7RA1Y	1	1		yes	
+claude-opus-5-5	none	short	accept-reject-amounts-dates	e-x24Ma0	1	1		yes	
+claude-opus-5-5	none	short	chained-edits	e-Aa0w1d	1	1		yes	
+claude-opus-5-5	none	short	chained-edits	e-OxUakf	1	1		yes	
+claude-opus-5-5	none	short	chained-edits	e-b4d9oy	1	1		yes	
+claude-opus-5-5	none	short	chained-edits	e-citYqt	1	1		yes	
+claude-opus-5-5	none	short	chained-edits	e-ywGCbY	1	1		yes	
+claude-opus-5-5	none	short	comment-liability-cap	e-EG5MjB	1	1		yes	
+claude-opus-5-5	none	short	comment-liability-cap	e-ElcolU	1	1		yes	
+claude-opus-5-5	none	short	comment-liability-cap	e-PtVSWY	1	1		yes	
+claude-opus-5-5	none	short	comment-liability-cap	e-TZFIEi	1	1		yes	
+claude-opus-5-5	none	short	comment-liability-cap	e-aKS6VE	1	1		yes	
+claude-opus-5-5	none	short	compare-v1-v2	e-1CDsVZ	1	1		yes	
+claude-opus-5-5	none	short	compare-v1-v2	e-b4fx7k	1	1		yes	
+claude-opus-5-5	none	short	compare-v1-v2	e-vMi0gl	1	1		yes	
+claude-opus-5-5	none	short	compare-v1-v2	e-vS4mQU	1	1		yes	
+claude-opus-5-5	none	short	compare-v1-v2	e-zHpR5x	1	1		yes	
+claude-opus-5-5	none	short	read-conditions-precedent	e-fv6E5I	0	0			
+claude-opus-5-5	none	short	read-conditions-precedent	e-gV6IFG	0	0			
+claude-opus-5-5	none	short	read-conditions-precedent	e-haKXtB	0	0			
+claude-opus-5-5	none	short	read-conditions-precedent	e-kDvLyR	0	0			
+claude-opus-5-5	none	short	read-conditions-precedent	e-wEa5ca	0	0			
+claude-opus-5-5	none	short	redline-net60-new-york	e-06D2L9	1	1		yes	
+claude-opus-5-5	none	short	redline-net60-new-york	e-9d4gju	1	1		yes	
+claude-opus-5-5	none	short	redline-net60-new-york	e-Bn1EZy	1	1		yes	
+claude-opus-5-5	none	short	redline-net60-new-york	e-UDjvtp	1	1		yes	
+claude-opus-5-5	none	short	redline-net60-new-york	e-oilboW	1	1		yes	
+claude-opus-5-5	none	short	rename-seller-vendor	e-8VCQ1q	1	1		yes	
+claude-opus-5-5	none	short	rename-seller-vendor	e-BkE3fR	1	1		yes	
+claude-opus-5-5	none	short	rename-seller-vendor	e-HotPEL	1	1		yes	
+claude-opus-5-5	none	short	rename-seller-vendor	e-bZtHqm	1	1		yes	
+claude-opus-5-5	none	short	rename-seller-vendor	e-q1zEo5	1	1		yes	
+claude-opus-5-5	none	short	stale-colleague-edit	e-3aFGFx	0	0			
+claude-opus-5-5	none	short	stale-colleague-edit	e-NAJm9Y	0	0			
+claude-opus-5-5	none	short	stale-colleague-edit	e-QAuDgg	0	0			
+claude-opus-5-5	none	short	stale-colleague-edit	e-S83ZmZ	1	1		yes	
+claude-opus-5-5	none	short	stale-colleague-edit	e-jPPo9W	1	1		yes	
+claude-opus-5-5	none	stale	stale-colleague-edit	e-1dfZu0	0	0			
+claude-opus-5-5	none	stale	stale-colleague-edit	e-3flHSo	0	0			
+claude-opus-5-5	none	stale	stale-colleague-edit	e-Knxlfr	0	0			
+claude-opus-5-5	none	stale	stale-colleague-edit	e-WMYnhB	0	0			
+claude-opus-5-5	none	stale	stale-colleague-edit	e-qHk7pc	0	0			
+claude-opus-5-5	stetdoc	long	long-csa-counter-redline	e-rEcZy1	2	2		yes	
+claude-opus-5-5	stetdoc	long	long-csa-counter-redline	e-w6sxyr	2	2		yes	
+claude-opus-5-5	stetdoc	long	long-indenture-markup	e-0li7UP	1	1		yes	
+claude-opus-5-5	stetdoc	long	long-indenture-markup	e-ZoSyJJ	1	1		yes	
+claude-opus-5-5	stetdoc	long	long-underwriting-markup	e-JVDmy3	1	1		yes	
+claude-opus-5-5	stetdoc	long	long-underwriting-markup	e-fh4rkb	1	1		yes	
+claude-opus-5-5	stetdoc	short	accept-reject-amounts-dates	e-1W9VPM	1	1		yes	
+claude-opus-5-5	stetdoc	short	accept-reject-amounts-dates	e-2X26YV	1	1		yes	
+claude-opus-5-5	stetdoc	short	accept-reject-amounts-dates	e-NkmSeY	1	1		yes	
+claude-opus-5-5	stetdoc	short	accept-reject-amounts-dates	e-VKi7mZ	1	1		yes	
+claude-opus-5-5	stetdoc	short	accept-reject-amounts-dates	e-cPkmm8	1	1		yes	
+claude-opus-5-5	stetdoc	short	chained-edits	e-0d8ad6	1	1		yes	
+claude-opus-5-5	stetdoc	short	chained-edits	e-VePTDm	1	1		yes	
+claude-opus-5-5	stetdoc	short	chained-edits	e-cyy2wT	1	1		yes	
+claude-opus-5-5	stetdoc	short	chained-edits	e-txJZJj	1	1		yes	
+claude-opus-5-5	stetdoc	short	chained-edits	e-zzEVS6	1	1		yes	
+claude-opus-5-5	stetdoc	short	comment-liability-cap	e-6pFxEK	1	1		yes	
+claude-opus-5-5	stetdoc	short	comment-liability-cap	e-KSz8sn	1	1		yes	
+claude-opus-5-5	stetdoc	short	comment-liability-cap	e-eZS4ns	1	1		yes	
+claude-opus-5-5	stetdoc	short	comment-liability-cap	e-hkVax1	1	1		yes	
+claude-opus-5-5	stetdoc	short	comment-liability-cap	e-ulDmD2	1	1		yes	
+claude-opus-5-5	stetdoc	short	compare-v1-v2	e-6lEFdp	1	1		yes	
+claude-opus-5-5	stetdoc	short	compare-v1-v2	e-UI9geP	1	1		yes	
+claude-opus-5-5	stetdoc	short	compare-v1-v2	e-XVEIhS	1	1		yes	
+claude-opus-5-5	stetdoc	short	compare-v1-v2	e-dJ53it	1	1		yes	
+claude-opus-5-5	stetdoc	short	compare-v1-v2	e-kbfbQG	1	1		yes	
+claude-opus-5-5	stetdoc	short	read-conditions-precedent	e-15JWjv	0	0			
+claude-opus-5-5	stetdoc	short	read-conditions-precedent	e-AOTAht	0	0			
+claude-opus-5-5	stetdoc	short	read-conditions-precedent	e-K2ue0L	0	0			
+claude-opus-5-5	stetdoc	short	read-conditions-precedent	e-Lre5c0	0	0			
+claude-opus-5-5	stetdoc	short	read-conditions-precedent	e-TdJvDM	0	0			
+claude-opus-5-5	stetdoc	short	redline-net60-new-york	e-1u7tG1	1	1		yes	
+claude-opus-5-5	stetdoc	short	redline-net60-new-york	e-3tE87J	1	1		yes	
+claude-opus-5-5	stetdoc	short	redline-net60-new-york	e-OUQd1U	1	1		yes	
+claude-opus-5-5	stetdoc	short	redline-net60-new-york	e-iympb0	1	1		yes	
+claude-opus-5-5	stetdoc	short	redline-net60-new-york	e-zsZyRQ	1	1		yes	
+claude-opus-5-5	stetdoc	short	rename-seller-vendor	e-L39wtA	1	1		yes	
+claude-opus-5-5	stetdoc	short	rename-seller-vendor	e-Q2MpAa	1	1		yes	
+claude-opus-5-5	stetdoc	short	rename-seller-vendor	e-QsQExx	1	1		yes	
+claude-opus-5-5	stetdoc	short	rename-seller-vendor	e-lSr3eC	1	1		yes	
+claude-opus-5-5	stetdoc	short	rename-seller-vendor	e-mJHw5C	1	1		yes	
+claude-opus-5-5	stetdoc	short	stale-colleague-edit	e-8FI8Aj	1	1		yes	
+claude-opus-5-5	stetdoc	short	stale-colleague-edit	e-LNMesz	1	1		yes	
+claude-opus-5-5	stetdoc	short	stale-colleague-edit	e-LoKORG	1	1		yes	
+claude-opus-5-5	stetdoc	short	stale-colleague-edit	e-oZqaVp	1	1		yes	
+claude-opus-5-5	stetdoc	short	stale-colleague-edit	e-pcrWOf	1	1		yes	
+claude-opus-5-5	stetdoc	stale	stale-colleague-edit	e-1XWFp9	1	1		yes	
+claude-opus-5-5	stetdoc	stale	stale-colleague-edit	e-TEIpEe	1	1		yes	
+claude-opus-5-5	stetdoc	stale	stale-colleague-edit	e-VT4RSO	1	1		yes	
+claude-opus-5-5	stetdoc	stale	stale-colleague-edit	e-Ys7ZUt	1	1		yes	
+claude-opus-5-5	stetdoc	stale	stale-colleague-edit	e-yiU5D2	1	1		yes	
+claude-opus-5-5	stetdoc	without-stetdoc	not-installed	e-FaHndX	0	0			
+claude-opus-5-5	stetdoc	without-stetdoc	not-installed	e-fjfZN1	0	0			
+claude-opus-5-5	stetdoc	without-stetdoc	not-installed	e-kgfpn5	0	0			
+claude-opus-5-5	stetdoc	without-stetdoc	not-installed	e-ouSHNG	0	0			
+claude-opus-5-5	stetdoc	without-stetdoc	not-installed	e-xZULsZ	0	0			
+gemini-3.8-flash-medium	adeu	long	long-csa-counter-redline	a-OUDncL	2	2		yes	
+gemini-3.8-flash-medium	adeu	long	long-csa-counter-redline	a-SI1HWy	1	1		yes	
+gemini-3.8-flash-medium	adeu	long	long-indenture-markup	a-470IDw	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+gemini-3.8-flash-medium	adeu	long	long-indenture-markup	a-AORRQp	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+gemini-3.8-flash-medium	adeu	long	long-underwriting-markup	a-1s2v06	1	1		yes	
+gemini-3.8-flash-medium	adeu	long	long-underwriting-markup	a-jPN7dL	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	accept-reject-amounts-dates	a-ZFuDsJ	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	accept-reject-amounts-dates	a-anaX3x	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	accept-reject-amounts-dates	a-fYtD0e	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	accept-reject-amounts-dates	a-oyUi4U	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	accept-reject-amounts-dates	a-zJ0hbl	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	chained-edits	a-9oFOQO	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	chained-edits	a-Klspp5	4	4		yes	
+gemini-3.8-flash-medium	adeu	short	chained-edits	a-RzXkIP	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	chained-edits	a-djBtAy	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	chained-edits	a-fzpFwG	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	comment-liability-cap	a-YbGLhz	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	comment-liability-cap	a-i1poo6	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	comment-liability-cap	a-ky1HpG	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	comment-liability-cap	a-m3h1Pn	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	comment-liability-cap	a-qryLnD	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	compare-v1-v2	a-28eue3	2	2		yes	
+gemini-3.8-flash-medium	adeu	short	compare-v1-v2	a-FF7G60	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	compare-v1-v2	a-GBuyjc	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	compare-v1-v2	a-if6H6J	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	compare-v1-v2	a-n8qciI	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	read-conditions-precedent	a-3wstcE	0	0			
+gemini-3.8-flash-medium	adeu	short	read-conditions-precedent	a-oIQdf6	0	0			
+gemini-3.8-flash-medium	adeu	short	read-conditions-precedent	a-qvp9Sw	0	0			
+gemini-3.8-flash-medium	adeu	short	read-conditions-precedent	a-uHyGci	0	0			
+gemini-3.8-flash-medium	adeu	short	read-conditions-precedent	a-uKyQJz	0	0			
+gemini-3.8-flash-medium	adeu	short	redline-net60-new-york	a-8tjnl6	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	redline-net60-new-york	a-Fa5EnJ	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	redline-net60-new-york	a-Ht6qwv	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	redline-net60-new-york	a-PNl2LA	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	redline-net60-new-york	a-eNwCe5	2	2		yes	
+gemini-3.8-flash-medium	adeu	short	rename-seller-vendor	a-0IztCV	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	rename-seller-vendor	a-BRbXKF	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	rename-seller-vendor	a-Ikcqdo	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	rename-seller-vendor	a-cXCoiY	1	1		yes	
+gemini-3.8-flash-medium	adeu	short	rename-seller-vendor	a-ntpBUd	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	long	long-csa-counter-redline	a-ZFB4Td	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	long	long-csa-counter-redline	a-kh5H80	14	14		yes	
+gemini-3.8-flash-medium	anthropic-docx	long	long-indenture-markup	a-dJKbhJ	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	long	long-indenture-markup	a-eLDSXE	2	2	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT; ./scratch/test.docx: REPAIR_PROMPT	no	
+gemini-3.8-flash-medium	anthropic-docx	long	long-underwriting-markup	a-E2ceXB	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	long	long-underwriting-markup	a-i2THlL	0	0			
+gemini-3.8-flash-medium	anthropic-docx	short	accept-reject-amounts-dates	a-8jt9Do	2	2		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	accept-reject-amounts-dates	a-dB1hfv	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	accept-reject-amounts-dates	a-mNtBl3	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	accept-reject-amounts-dates	a-mbMLRZ	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	accept-reject-amounts-dates	a-ulU7Zw	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	chained-edits	a-09MNik	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	chained-edits	a-9PpU4k	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	chained-edits	a-Bztl5O	2	2		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	chained-edits	a-vFGqQ5	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	chained-edits	a-wgLjLJ	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	comment-liability-cap	a-59vmXf	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	comment-liability-cap	a-6Xi2ak	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	comment-liability-cap	a-Z9tVI0	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	comment-liability-cap	a-cg8pIl	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	comment-liability-cap	a-uz8nAE	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	compare-v1-v2	a-6NRFyW	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	compare-v1-v2	a-MrldRY	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	compare-v1-v2	a-rlCYqb	3	3		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	compare-v1-v2	a-uawrnm	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	compare-v1-v2	a-wanZj0	3	3		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	read-conditions-precedent	a-5fUDna	0	0			
+gemini-3.8-flash-medium	anthropic-docx	short	read-conditions-precedent	a-EAh9H0	0	0			
+gemini-3.8-flash-medium	anthropic-docx	short	read-conditions-precedent	a-RlQHsw	0	0			
+gemini-3.8-flash-medium	anthropic-docx	short	read-conditions-precedent	a-hgft8g	0	0			
+gemini-3.8-flash-medium	anthropic-docx	short	read-conditions-precedent	a-kGMFMi	0	0			
+gemini-3.8-flash-medium	anthropic-docx	short	redline-net60-new-york	a-VMA5O2	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	redline-net60-new-york	a-Xu4GfA	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	redline-net60-new-york	a-ck2jtO	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	redline-net60-new-york	a-vt5F7x	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	redline-net60-new-york	a-xw4P8X	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	rename-seller-vendor	a-6l37OL	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	rename-seller-vendor	a-6ohZ67	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	rename-seller-vendor	a-EBzelC	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	rename-seller-vendor	a-Ir2i54	1	1		yes	
+gemini-3.8-flash-medium	anthropic-docx	short	rename-seller-vendor	a-tvuw5U	1	1		yes	
+gemini-3.8-flash-medium	none	long	long-csa-counter-redline	a-U8ogXa	2	2		yes	
+gemini-3.8-flash-medium	none	long	long-csa-counter-redline	a-zUsoZi	2	2		yes	
+gemini-3.8-flash-medium	none	long	long-indenture-markup	a-SjFpuU	1	1	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+gemini-3.8-flash-medium	none	long	long-indenture-markup	a-q4iheH	3	3	./docs/redlined-indenture-markup.docx: REPAIR_PROMPT	no	
+gemini-3.8-flash-medium	none	long	long-underwriting-markup	a-ptCLME	1	1		yes	
+gemini-3.8-flash-medium	none	long	long-underwriting-markup	a-zQZztV	1	1		yes	
+gemini-3.8-flash-medium	none	short	accept-reject-amounts-dates	a-1WrBq3	1	1		yes	
+gemini-3.8-flash-medium	none	short	accept-reject-amounts-dates	a-CNrlqz	1	1		yes	
+gemini-3.8-flash-medium	none	short	accept-reject-amounts-dates	a-ELsYqu	1	1		yes	
+gemini-3.8-flash-medium	none	short	accept-reject-amounts-dates	a-VaUuW2	1	1		yes	
+gemini-3.8-flash-medium	none	short	accept-reject-amounts-dates	a-ZSxZoB	2	2		yes	
+gemini-3.8-flash-medium	none	short	chained-edits	a-01xoEW	1	1		yes	
+gemini-3.8-flash-medium	none	short	chained-edits	a-AC8FXM	1	1		yes	
+gemini-3.8-flash-medium	none	short	chained-edits	a-RjRGNE	1	1		yes	
+gemini-3.8-flash-medium	none	short	chained-edits	a-WUT7FA	1	1		yes	
+gemini-3.8-flash-medium	none	short	chained-edits	a-fAwQp7	1	1		yes	
+gemini-3.8-flash-medium	none	short	comment-liability-cap	a-3oJD4Y	1	1		yes	
+gemini-3.8-flash-medium	none	short	comment-liability-cap	a-pJV8x4	1	1		yes	
+gemini-3.8-flash-medium	none	short	comment-liability-cap	a-qFrki7	1	1		yes	
+gemini-3.8-flash-medium	none	short	comment-liability-cap	a-tvruof	1	1		yes	
+gemini-3.8-flash-medium	none	short	comment-liability-cap	a-uAw5Xs	1	1		yes	
+gemini-3.8-flash-medium	none	short	compare-v1-v2	a-7MH7Le	5	5		yes	
+gemini-3.8-flash-medium	none	short	compare-v1-v2	a-B6mPOc	1	1		yes	
+gemini-3.8-flash-medium	none	short	compare-v1-v2	a-cN4knW	4	4		yes	
+gemini-3.8-flash-medium	none	short	compare-v1-v2	a-dytDxq	1	1		yes	
+gemini-3.8-flash-medium	none	short	compare-v1-v2	a-qTfUi0	3	3		yes	
+gemini-3.8-flash-medium	none	short	read-conditions-precedent	a-29w8ws	0	0			
+gemini-3.8-flash-medium	none	short	read-conditions-precedent	a-D6zPui	0	0			
+gemini-3.8-flash-medium	none	short	read-conditions-precedent	a-atjEfx	0	0			
+gemini-3.8-flash-medium	none	short	read-conditions-precedent	a-qu8CGJ	0	0			
+gemini-3.8-flash-medium	none	short	read-conditions-precedent	a-tHUHvy	0	0			
+gemini-3.8-flash-medium	none	short	redline-net60-new-york	a-Agamsm	1	1		yes	
+gemini-3.8-flash-medium	none	short	redline-net60-new-york	a-F42KhZ	1	1		yes	
+gemini-3.8-flash-medium	none	short	redline-net60-new-york	a-bay5tK	1	1		yes	
+gemini-3.8-flash-medium	none	short	redline-net60-new-york	a-isO0IF	1	1		yes	
+gemini-3.8-flash-medium	none	short	redline-net60-new-york	a-mkD33p	1	1		yes	
+gemini-3.8-flash-medium	none	short	rename-seller-vendor	a-CG2J3V	1	1		yes	
+gemini-3.8-flash-medium	none	short	rename-seller-vendor	a-ENn8a8	1	1		yes	
+gemini-3.8-flash-medium	none	short	rename-seller-vendor	a-nCJY17	1	1		yes	
+gemini-3.8-flash-medium	none	short	rename-seller-vendor	a-pzJUBu	1	1		yes	
+gemini-3.8-flash-medium	none	short	rename-seller-vendor	a-ybuAW6	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	long	long-csa-counter-redline	a-Zh25Jo	2	2		yes	
+gemini-3.8-flash-medium	stetdoc	long	long-csa-counter-redline	a-hiEbu9	2	2		yes	
+gemini-3.8-flash-medium	stetdoc	long	long-indenture-markup	a-VcHNjL	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	long	long-indenture-markup	a-lz3Pwt	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	long	long-underwriting-markup	a-t46aGt	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	long	long-underwriting-markup	a-tsJm6q	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	accept-reject-amounts-dates	a-8xQEnu	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	accept-reject-amounts-dates	a-RsgvTI	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	accept-reject-amounts-dates	a-mDGRNf	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	accept-reject-amounts-dates	a-n4BMFI	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	accept-reject-amounts-dates	a-oPTknc	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	chained-edits	a-71GtsE	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	chained-edits	a-8DSdjt	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	chained-edits	a-AhH9pB	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	chained-edits	a-id8PFs	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	chained-edits	a-q2Q4qM	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	comment-liability-cap	a-7SDxSi	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	comment-liability-cap	a-OanLrp	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	comment-liability-cap	a-TP6DQM	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	comment-liability-cap	a-d9OBcT	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	comment-liability-cap	a-j3ITSx	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	compare-v1-v2	a-1DPoNN	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	compare-v1-v2	a-Hp6TjK	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	compare-v1-v2	a-R9R8k1	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	compare-v1-v2	a-fTElbg	2	2		yes	
+gemini-3.8-flash-medium	stetdoc	short	compare-v1-v2	a-tOpWCj	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	read-conditions-precedent	a-43Vgbt	0	0			
+gemini-3.8-flash-medium	stetdoc	short	read-conditions-precedent	a-6HhKWy	0	0			
+gemini-3.8-flash-medium	stetdoc	short	read-conditions-precedent	a-7kyWyi	0	0			
+gemini-3.8-flash-medium	stetdoc	short	read-conditions-precedent	a-ZAZ66w	0	0			
+gemini-3.8-flash-medium	stetdoc	short	read-conditions-precedent	a-xh4pwi	0	0			
+gemini-3.8-flash-medium	stetdoc	short	redline-net60-new-york	a-12f8Q4	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	redline-net60-new-york	a-FUli2X	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	redline-net60-new-york	a-bHDBhz	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	redline-net60-new-york	a-cs9dbz	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	redline-net60-new-york	a-p398sc	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	rename-seller-vendor	a-0Lgr0N	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	rename-seller-vendor	a-7gB7OK	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	rename-seller-vendor	a-a2Jkmt	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	rename-seller-vendor	a-saXBgt	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	short	rename-seller-vendor	a-wKluke	1	1		yes	
+gemini-3.8-flash-medium	stetdoc	without-stetdoc	not-installed	a-0od5QJ	0	0			
+gemini-3.8-flash-medium	stetdoc	without-stetdoc	not-installed	a-Az2RAa	0	0			
+gemini-3.8-flash-medium	stetdoc	without-stetdoc	not-installed	a-FCkBQO	0	0			
+gemini-3.8-flash-medium	stetdoc	without-stetdoc	not-installed	a-HIR0kT	0	0			
+gemini-3.8-flash-medium	stetdoc	without-stetdoc	not-installed	a-re0Gh7	0	0			

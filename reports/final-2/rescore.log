@@ -1,0 +1,8 @@
+689 runs, 4935 regex verdicts; the raw reports reproduce every stored verdict.
+arm	runs	notes in reports	grader matches inside a note	grader x run with marker-dependent matches	grader verdicts changed	runs whose verdict changed
+adeu	143	196	86	1	1	1
+anthropic-docx	143	208	88	0	0	0
+anthropic-legal	102	120	59	0	0	0
+none	143	182	83	0	0	0
+stetdoc	158	0	0	0	0	0
+claude-haiku-5-5	adeu	short	chained-edits	e-zqC1Zv	false	true	payment-back-to-30

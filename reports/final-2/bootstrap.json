@@ -1,0 +1,74 @@
+{
+ "claude-haiku-5-5": {
+  "none": {
+   "point": 0,
+   "lo": 0,
+   "hi": 0,
+   "tasks": 8
+  },
+  "anthropic-docx": {
+   "point": 0,
+   "lo": 0,
+   "hi": 0,
+   "tasks": 8
+  },
+  "anthropic-legal": {
+   "point": 0,
+   "lo": 0,
+   "hi": 0,
+   "tasks": 8
+  },
+  "adeu": {
+   "point": 15,
+   "lo": 0,
+   "hi": 40,
+   "tasks": 8
+  }
+ },
+ "claude-opus-5-5": {
+  "none": {
+   "point": 0,
+   "lo": 0,
+   "hi": 0,
+   "tasks": 7
+  },
+  "anthropic-docx": {
+   "point": 0,
+   "lo": 0,
+   "hi": 0,
+   "tasks": 8
+  },
+  "anthropic-legal": {
+   "point": 3,
+   "lo": 0,
+   "hi": 8,
+   "tasks": 8
+  },
+  "adeu": {
+   "point": 13,
+   "lo": 0,
+   "hi": 38,
+   "tasks": 8
+  }
+ },
+ "gemini-3.8-flash-medium": {
+  "none": {
+   "point": 0,
+   "lo": -9,
+   "hi": 9,
+   "tasks": 7
+  },
+  "anthropic-docx": {
+   "point": 3,
+   "lo": -6,
+   "hi": 11,
+   "tasks": 7
+  },
+  "adeu": {
+   "point": 11,
+   "lo": -9,
+   "hi": 43,
+   "tasks": 7
+  }
+ }
+}
