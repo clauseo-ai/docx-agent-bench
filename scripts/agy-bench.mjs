@@ -9,8 +9,8 @@
 // agy's stream-json is converted to a Claude-style transcript (tool names Bash/Read/Write/Edit/Grep/Glob), so
 // report.sh's metrics, the case graders (regex, tool_used, llm) and verify.mjs / analyze.mjs work unchanged.
 // Output, like bench.sh: OUT/eval/aggregate-result.json, OUT/metrics.jsonl, OUT/reports/<case>-<id>.{txt,transcript.jsonl,agy.jsonl}.
-// Env: AGY (default ~/.local/bin/agy), AGY_MODEL (gemini-3.8-flash-medium), GOOGLE_GEMINI_BASE_URL (http://127.0.0.1:6969),
-// AGY_TIMEOUT (1800 s per run), GEMINI_API_KEY (dummy), STETDOC_BIN, OOXML_VALIDATE, ARMS (/tmp/bench-arms), TOOLS (/tmp/bench-tools),
+// Env: AGY (default ~/.local/bin/agy), AGY_MODEL (gemini-3.8-flash-medium), GEMINI_API_KEY (required),
+// GOOGLE_GEMINI_BASE_URL (optional; unset, agy uses Google's public Gemini API endpoint), AGY_TIMEOUT (1800 s per run), STETDOC_BIN, OOXML_VALIDATE, ARMS (/tmp/bench-arms), TOOLS (/tmp/bench-tools),
 // JUDGE (claude-sonnet-5-5; JUDGE=0 skips llm graders), KEEP=1 keeps the run roots,
 // KEEP_OUTPUTS=1 copies each run's new or changed .docx files to OUT/outputs/<case>-<id>/.
 import fs from 'fs'; import path from 'path'; import os from 'os'; import { spawn, execFileSync } from 'child_process';
@@ -36,6 +36,7 @@ const OOXML = process.env.OOXML_VALIDATE || which('ooxml-validate');
 if (!STETDOC) { console.error('stetdoc not found (STETDOC_BIN): the report needs it for every arm'); process.exit(2); }
 if (!OOXML) console.error('warning: no ooxml-validate (set OOXML_VALIDATE); the primary validity check will be unavailable');
 const settings = path.join(HOME0, '.gemini/antigravity-cli/settings.json');
+if (!process.env.GEMINI_API_KEY) { console.error('GEMINI_API_KEY is not set: agy-bench.mjs passes it to agy (see scripts/README.md)'); process.exit(2); }
 if (!fs.existsSync(settings)) { console.error(`no ${settings}: write {"modelProvider":"gemini"} there (see README)`); process.exit(2); }
 const partDir = { short: 'cases', long: 'long', 'without-stetdoc': 'without-stetdoc' }[part];
 if (!partDir) { console.error(`part ${part}: short, long or without-stetdoc (stale is not supported)`); process.exit(2); }
@@ -202,8 +203,8 @@ async function runOne(c, n) {
   // The agent's environment: no benchmark variables (the validator path, the metrics file), so it cannot use them.
   const inherited = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(EVAL_|OOXML_|STETDOC_|CLAUDE|ANTHROPIC_|KEEP$|KEEP_OUTPUTS$|JUDGE$|AGY)/.test(k)));
   fs.mkdirSync(path.join(R, 'tmp'));
-  const agentEnv = { ...inherited, HOME: home, TMPDIR: path.join(R, 'tmp'), PATH: agentPath, GEMINI_API_KEY: process.env.GEMINI_API_KEY || 'dummy',
-    GOOGLE_GEMINI_BASE_URL: process.env.GOOGLE_GEMINI_BASE_URL || 'http://127.0.0.1:6969' };
+  const agentEnv = { ...inherited, HOME: home, TMPDIR: path.join(R, 'tmp'), PATH: agentPath, GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+    ...(process.env.GOOGLE_GEMINI_BASE_URL ? { GOOGLE_GEMINI_BASE_URL: process.env.GOOGLE_GEMINI_BASE_URL } : {}) };
   // The harness's environment (scaffold and report.sh) adds what they read.
   const baseEnv = { ...agentEnv, EVAL_STETDOC_BIN: STETDOC, EVAL_OOXML_VALIDATE: OOXML, EVAL_STETDOC_METRICS: path.join(out, 'metrics.jsonl'), CLAUDE_PROJECT_DIR: cwd,
     ...(process.env.KEEP_OUTPUTS === '1' ? { EVAL_KEEP_OUTPUTS: '1' } : {}) };
