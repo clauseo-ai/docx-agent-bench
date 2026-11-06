@@ -1,10 +1,11 @@
 # docx-agent-bench
 
-A benchmark for AI coding agents that read and edit Word documents. Each case gives an agent a realistic request
-about a real contract (documents from Harvey LAB), with one document plugin or skill loaded. That plugin is the
-"arm". Graders then check the files the agent wrote. The same criteria apply to every arm, so stetdoc, no plugin,
-Anthropic's docx skill, Anthropic's legal plugin and Adeu are measured the same way. Claude models run in Claude Code
-(`claude plugin eval`), Gemini runs in the Antigravity CLI (`agy`).
+A benchmark for AI coding agents that read and edit Word documents. Each case gives an agent a realistic request about a
+contract from Harvey LAB, a public set of synthetic legal documents (most of them written by python-docx), with one
+document plugin or skill loaded. That plugin is the "arm". Graders then check the files the agent wrote. The same
+criteria apply to every arm, so stetdoc, no plugin, Anthropic's docx skill, Anthropic's legal plugin and Adeu are
+measured the same way. Claude models run in Claude Code (`claude plugin eval`), Gemini runs in the Antigravity CLI
+(`agy`).
 
 **Conflict of interest.** This benchmark was written by the author of stetdoc, one of the arms it compares.
 stetdoc is made by Clauseo (https://clauseo.chat): https://github.com/clauseo-ai/stetdoc, site
@@ -30,6 +31,14 @@ final-2 is the run the stetdoc site quotes. It ran on 2026-10-30 and was scored 
 
 ### Results
 
+final-2 has 8 short tasks (7 edits and 1 read-only question) and 3 long Harvey LAB markups, on 3 models and 5 setups.
+Each short task ran 5 times per model and setup, and each long task 2 times.
+Gemini ran 4 setups and 7 short tasks: the legal plugin and the stale case were not run there. stetdoc had the fastest
+median time per short task on all three models. On correctness it tied with no plugin on all three models. On the long
+tasks, stetdoc's 6 of 6 per model means every file it wrote opened in Word without a repair prompt and the objective
+checks passed. The judge's legal rubric is reported apart and did not separate the setups. Only the stetdoc setup had a
+Claude Code hook that blocks other ways of writing a .docx, which steers the agent and may help its speed.
+
 Short tasks, fully correct runs, with Wilson 95% intervals in brackets. Copied from
 [`reports/final-2/tables.md`](reports/final-2/tables.md) lines 7-13:
 
@@ -54,9 +63,20 @@ Median wall-clock seconds per short run, from tables.md lines 100-113 (the "wall
 | claude-opus-5-5 | 25 | 43 | 55.5 | 49 | 36.5 |
 | gemini-3.8-flash-medium | 135 | 426 | 538 | not run | 274 |
 
-Long tasks (3 Harvey LAB tasks, 2 runs each, so 6 runs per cell) are in tables.md lines 79-94: stetdoc is 6/6 fully
-correct on each model, the other arms 2/6 to 5/6. The judge's rubric share is 75% to 99% across all cells, near the
-ceiling for most arms.
+Per task (the 7 short cases plus the stale case on Claude), stetdoc's median is the fastest on 7 of 8 Haiku tasks
+(anthropic-legal is faster on read-conditions-precedent, 22 s against 23 s), 6 of 8 Opus tasks (adeu is faster on
+accept-reject-amounts-dates, 36 s against 40 s, and on read-conditions-precedent, 35 s against 38 s) and 7 of 7 Gemini
+tasks. Recomputed from runs.csv, blocked runs left out.
+
+Long tasks (3 Harvey LAB tasks, 2 runs each, so 6 runs per cell) are in tables.md lines 79-94. "Fully correct" in that
+table means the objective criteria passed and every written file opened in Word without an error or a repair prompt; it
+does not include the judge's rubric. stetdoc is 6/6 on each model, the other arms 2/6 to 5/6. On Claude, every long
+failure of another arm is a Word repair prompt, and 16 of those 17 are on `long-indenture-markup`; 20 of the 24 repair
+prompts in the whole run come from that task (`grep -c REPAIR` and `grep REPAIR ... | grep -c long-indenture` over
+reports/final-2/word-verdicts.tsv). The indenture's input file does not open cleanly in Word for Mac itself (stetdoc's
+decision 0014, `docs/decisions/0014-repair-undeclared-mc-prefixes.md`, describes the defect), so most of the long-task
+gap comes from one task whose input file Word already refuses. The judge's rubric share is stetdoc 94% to 98%, the
+others 75% to 99%. stetdoc's exact-string items are 14/16 to 16/16, the others 12/16 to 16/16.
 
 The table counts 639 runs (tables.md line 115). The short-task table above leaves out the 15 `not-installed` runs, the
 84 long runs and 8 blocked Opus runs (see "Known limits").
